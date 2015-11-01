@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Faktor izvesnosti</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_pravila">Pravila</string>
+    <string name="title_activity_algoritam">Algoritam</string>
+    <string name="title_activity_ostalo">Ostalo</string>
+    <string name="title_activity_resenje">Resenje</string>
+    <string name="title_activity_unos_pravila">UnosPravila</string>
+</resources>
