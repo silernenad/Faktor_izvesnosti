@@ -25,7 +25,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="bottom">
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,6 +46,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="124dp" />
+    </LinearLayout>
+
+
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,41 +57,49 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button5"
         android:layout_above="@+id/button4"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:src="@drawable/backward"
+        />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button6"
         android:layout_alignTop="@+id/button5"
         android:layout_toRightOf="@+id/button5"
-        android:layout_toEndOf="@+id/button5" />
+        android:layout_toEndOf="@+id/button5"
+        android:src="@drawable/rplay"
+        />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button7"
         android:layout_alignTop="@+id/button6"
         android:layout_toRightOf="@+id/button6"
-        android:layout_toEndOf="@+id/button6" />
+        android:layout_toEndOf="@+id/button6"
+        android:src="@drawable/play"
+        />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button8"
         android:layout_above="@+id/button4"
         android:layout_toRightOf="@+id/button7"
-        android:layout_toEndOf="@+id/button7" />
+        android:layout_toEndOf="@+id/button7"
+        android:src="@drawable/forward"
+        />
 
     </LinearLayout>
 
@@ -94,15 +115,12 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:onClick="onClick"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal" />
 
 
 
 
 </LinearLayout>
 
+</ScrollView>
 
-    </ScrollView>
-    <!--
-    </RelativeLayout>
-    -->
