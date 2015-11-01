@@ -1,8 +1,10 @@
 package com.example.user.faktorizvesnosti;
 
 
+import java.io.Serializable;
 
-public class Zakljucak{
+
+public class Zakljucak implements Serializable{
 
     private String naziv;
     private String pravila; //e1,e2,...  ako ima vise od jednog pravila koja vode do zakljucka

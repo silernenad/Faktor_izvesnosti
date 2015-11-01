@@ -44,8 +44,14 @@ public class Ostalo extends AppCompatActivity {
         final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
         String zakljucakMessage = zakljucakInput.getText().toString();
         i.putExtra("zakljucak", zakljucakMessage);
+        int a = 10;
+        i.putExtra("broj", a);
+        Zakljucak zakljucak = new Zakljucak("Radi");
+
+        i.putExtra("nesto",zakljucak);
 
         startActivity(i);
+
     }
 
 }
