@@ -15,7 +15,7 @@ public class Zakljucak{
     public Zakljucak(String naziv) {
         this.naziv = naziv;
     }
-
+//proba gita
     public String getNaziv(){return naziv;}
     public double getFaktorI(){return CF;}
     public double getMB(){return MB;}
