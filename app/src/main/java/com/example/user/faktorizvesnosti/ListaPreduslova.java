@@ -1,8 +1,9 @@
 package com.example.user.faktorizvesnosti;
 
 
+import java.io.Serializable;
 
-public class ListaPreduslova {
+public class ListaPreduslova implements Serializable {
 
     private static class ElemPreduslov {
         public String naziv;
@@ -17,12 +18,15 @@ public class ListaPreduslova {
         }
 
     }
+    public ListaPreduslova(){
+        prvi = posl = null;
+    }
 
     private ElemPreduslov prvi = null, posl = null;
 
-    public boolean dodaj(ElemPreduslov e) {         //mozda traba void!!!!!!!!!!!
+    public boolean dodaj(String s) {         //mozda traba void!!!!!!!!!!!
 
-
+        ElemPreduslov e = new ElemPreduslov(s);
         if (null == prvi) prvi = posl = e;
         else posl.sled = e;
         posl = e;

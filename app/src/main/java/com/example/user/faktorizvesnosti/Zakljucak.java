@@ -17,6 +17,8 @@ public class Zakljucak implements Serializable{
     public Zakljucak(String naziv) {
         this.naziv = naziv;
     }
+    public Zakljucak(){}
+
 
     public String getNaziv(){return naziv;}
     public double getFaktorI(){return CF;}

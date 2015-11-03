@@ -1,7 +1,9 @@
 package com.example.user.faktorizvesnosti;
 
 
-public class Element {
+import java.io.Serializable;
+
+public class Element implements Serializable {
 
     private String naziv;
     private int MB=0;

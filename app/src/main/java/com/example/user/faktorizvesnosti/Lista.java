@@ -4,38 +4,24 @@ package com.example.user.faktorizvesnosti;
 
 
 public class Lista {
-/*
-    private static class ElemPreduslov {
-        public String naziv;
-        public ElemPreduslov sled = null;
-        
-        //mozda
 
-        public ElemPreduslov(String s){naziv = s;}
-        public ElemPreduslov(String s, ElemPreduslov e){
-            naziv = s;
-            sled = e;
-        }
+    private Elem prvi = null, posl = null;
 
-    }
-
-    private ElemPreduslov prvi = null, posl = null;
-
-    public boolean dodaj(ElemPreduslov e) {
+    public boolean dodaj(Elem e) {
 
 
         if (null == prvi) prvi = posl = e;
-        else posl.sled = e;
+        else posl = e;
         posl = e;
         return true;
     }
 
 
 
-    public void izbaci(ElemPreduslov e){
-        ElemPreduslov tek = prvi, pret = null;
+    public void izbaci(Elem e){
+        Elem tek = prvi, pret = null;
         while (null!=tek)
-            if (tek.naziv.equals(e.naziv)){
+            if (tek.equals(e)){                      //izmeni
                 pret = tek; tek = tek.sled;
             }
             else {
@@ -49,6 +35,9 @@ public class Lista {
         prvi = posl = null;
     }
 
-*/
-
+    public boolean prazna()
+    {
+        if (null==prvi) return false;
+        else return true;
+    }
 }

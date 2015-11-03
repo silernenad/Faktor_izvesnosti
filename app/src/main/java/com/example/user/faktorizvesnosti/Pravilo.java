@@ -1,10 +1,11 @@
 package com.example.user.faktorizvesnosti;
 
 
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.security.PublicKey;
 
 
-public class Pravilo {
+public class Pravilo implements Serializable {
 
     private double MB_ =0;        //MB' je MB_          //faktorI kod simulatora
     private double MD_ =0;
@@ -16,6 +17,7 @@ public class Pravilo {
 
     public Pravilo() {
         preduslov = new ListaPreduslova();
+        zakljucak = new Zakljucak();
     }
 
 
@@ -24,47 +26,57 @@ public class Pravilo {
         return MB_;
     }
 
-    public void setMB_(double MB_) {
-        this.MB_ = MB_;
-    }
+
 
     public double getMD_() {
         return MD_;
     }
-
-    public void setMD_(double MD_) {
-        this.MD_ = MD_;
-    }
-
     public Zakljucak getZakljucak() {
         return zakljucak;
     }
-
-    public void setZakljucak(Zakljucak zakljucak) {
-        this.zakljucak = zakljucak;
-    }
-
     public double getMB() {
         return MB;
     }
-
-    public void setMB(double MB) {
-        this.MB = MB;
-    }
-
     public double getMD() {
         return MD;
     }
-
-    public void setMD(double MD) {
-        this.MD = MD;
-    }
-
     public int getRedniBr() {
         return redniBr;
     }
 
+
+
+    public void setMD_(double MD_) {
+        this.MD_ = MD_;
+    }
+    public void setMB_(double MB_) {
+        this.MB_ = MB_;
+    }
+    public void setZakljucak(Zakljucak zakljucak) {
+        this.zakljucak = zakljucak;
+    }
+    public void setMB(double MB) {
+        this.MB = MB;
+    }
+    public void setMD(double MD) {
+        this.MD = MD;
+    }
     public void setRedniBr(int redniBr) {
         this.redniBr = redniBr;
     }
+
+    public void dodajPreduslov(String s){
+        preduslov.dodaj(s);
+    }
+
+
+    public void reset(){
+        setMB(0.0);
+        setMD(0.0);
+        setRedniBr(0);
+        setZakljucak(new Zakljucak());
+        preduslov = new ListaPreduslova();
+
+    }
+
 }

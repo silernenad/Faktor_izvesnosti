@@ -1,7 +1,9 @@
 package com.example.user.faktorizvesnosti;
 
 
-public class Cinjenice extends ListaPreduslova {
+import java.io.Serializable;
+
+public class Cinjenice extends ListaPreduslova implements Serializable {
 
     private static int ukId = 0;
 
