@@ -52,5 +52,16 @@ public class ListaPreduslova implements Serializable {
         prvi = posl = null;
     }
 
+    @Override
+    public String toString() {
 
+        StringBuilder stringBuilder = new StringBuilder();
+        ElemPreduslov tek = prvi;
+        while (null != tek) {
+            stringBuilder.append("/n" + tek.naziv);
+            tek = tek.sled;
+        }
+        return stringBuilder.toString();
+
+    }
 }

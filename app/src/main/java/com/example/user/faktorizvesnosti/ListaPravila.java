@@ -33,6 +33,15 @@ public class ListaPravila implements Serializable {
         return true;
     }
 
+    public String toString(){
+        StringBuilder s= new StringBuilder();
+        ElemPravilo tek = prvi;
+        while (tek != null) {
+            s.append(tek.p + "/n/n");
+        }
+        return s.toString();
+    }
+
 
 
 

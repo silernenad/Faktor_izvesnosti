@@ -24,14 +24,25 @@ public class Ostalo extends AppCompatActivity {
         final TextView baconText = (TextView) findViewById(R.id.opazanjaInput);
         */
 
+        /*** PROVERA DA LI TADI SLANJE I STAMPANJE LISTE_PRAVILA ***/
+
+        Intent intent = getIntent();
+        ListaPravila listaPravila = (ListaPravila) intent.getSerializableExtra("listapravila");
+
+        final EditText test = (EditText) findViewById(R.id.opazanjaInput);
+        test.setText(listaPravila.toString());
+
     }
     public void onClick(View view){
 
 
 
-        Intent i = new Intent(this,Resenje.class);
+        //prihvata podatke
         Bundle data = getIntent().getExtras();
         String pravilaMessage = data.getString("pravila");
+
+        //sprema podatke za slanje
+        Intent i = new Intent(this,Resenje.class);
         i.putExtra("pravila", pravilaMessage);
 
 
@@ -44,11 +55,21 @@ public class Ostalo extends AppCompatActivity {
         final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
         String zakljucakMessage = zakljucakInput.getText().toString();
         i.putExtra("zakljucak", zakljucakMessage);
+
+
+       /*********** ODAVDE ************/
+
         int a = 10;
         i.putExtra("broj", a);
-        Zakljucak zakljucak = new Zakljucak("Radi");
 
+
+
+        Zakljucak zakljucak = new Zakljucak("Radi");
         i.putExtra("nesto",zakljucak);
+
+
+        /*********** DOVDE ************/
+        /** MOZE DA SE OBRISE **/
 
         startActivity(i);
 

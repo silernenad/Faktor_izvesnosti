@@ -69,6 +69,10 @@ public class Pravilo implements Serializable {
         preduslov.dodaj(s);
     }
 
+    public void setujRedneBrojeveZiP(int a){
+        zakljucak.setRedniBroj(a);
+        setRedniBr(a);
+    }
 
     public void reset(){
         setMB(0.0);
@@ -77,6 +81,17 @@ public class Pravilo implements Serializable {
         setZakljucak(new Zakljucak());
         preduslov = new ListaPreduslova();
 
+    }
+
+    public String toSting(){
+        double broj;
+        if (getMB_()!=0)broj=getMB_();
+        else broj=getMD_();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("P" + redniBr + "/n" + "AKO /n");
+        stringBuilder.append(preduslov + "/n ONDA (" + broj + ") /n" );
+        stringBuilder.append(zakljucak);
+        return stringBuilder.toString();
     }
 
 }
