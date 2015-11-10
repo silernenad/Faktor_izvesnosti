@@ -24,22 +24,28 @@ public class ListaPravila implements Serializable {
     }
 
 
-    public boolean dodaj(Pravilo p) {       //trebalo bi da je dobro...
+    public void dodaj(Pravilo p) {       //bilo je boolean
 
         ElemPravilo novi = new ElemPravilo(p);
+
         if (null == prvi) prvi = posl = novi;
-        else posl.sled = novi;
-        posl = posl.sled;
-        return true;
+        else {
+            posl.sled = novi;
+            posl = novi;
+        }
+
     }
 
     public String toString(){
+        /*
         StringBuilder s= new StringBuilder();
         ElemPravilo tek = prvi;
         while (tek != null) {
             s.append(tek.p + "/n/n");
         }
         return s.toString();
+        */
+        return "uspeo da progura";
     }
 
 

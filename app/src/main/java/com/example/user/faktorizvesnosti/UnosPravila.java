@@ -27,13 +27,15 @@ public class UnosPravila extends AppCompatActivity {
         String pravilaMessage = pravilaInput.getText().toString();                  //ulazni Sting
 
         i.putExtra("pravila", pravilaMessage);
-     //   startActivity(i);
+
 
 
         /**************   DODATAK     **************/
 /*
         String url = "http://howtodoinjava.com/java-initerview-questions";  ako nesto nije u redu moze i ovako da se deli
         StringTokenizer multiTokenizer = new StringTokenizer(url, "://.-");
+        probaj sa ovim (sting, "\t\n\r ")                                                                                   
+
         */
 
         /**  dodata1 **/
@@ -43,9 +45,10 @@ public class UnosPravila extends AppCompatActivity {
         Pravilo novoPravilo = new Pravilo();                    //pravilo koje ce se ubacivati u listu
                                                 //cita se sa ulaza i pravi se novo pravilo
 
-        StringTokenizer ts = new StringTokenizer(pravilaMessage);
+        StringTokenizer ts = new StringTokenizer(pravilaMessage );
         while (ts.hasMoreTokens()){
             traziPreduslov(ts, novoPravilo); //trazi jedno pravilo sa ulaza
+        //    if(!ts.hasMoreTokens())break;
             novoPravilo.setujRedneBrojeveZiP(id++);
             listaPravila.dodaj(novoPravilo);
 
@@ -71,37 +74,56 @@ public class UnosPravila extends AppCompatActivity {
 
 
     public void traziPreduslov(StringTokenizer ts, Pravilo pravilo){
-        while (ts.toString()!="AKO"){
-            ts.nextToken();
+        while (!ts.nextToken().equals("AKO")){
+            if(!ts.hasMoreTokens())return;
+
         }
 
-        while (ts.toString() !="ONDA") {     //mozda traba prebaciti na veliak slova!!!!!! toUper
-           String s = ts.nextToken();
-            switch (s){
+    //    String s = ts.nextToken();
+        if(!ts.hasMoreTokens())return;
+
+        while (!ts.nextToken().equals("ONDA")) {     //mozda traba prebaciti na veliak slova!!!!!! toUper
+
+
+
+            if(!ts.hasMoreTokens())return;
+            switch (ts.toString()){
                 case "ILI":
-                    ts.nextToken();
+                  //  ts.nextToken();
                     break;
                 case "I":
-                    ts.nextToken();
+                  //  ts.nextToken();
                     break;
                 case "(":
-                    ts.nextToken();
+                 //   ts.nextToken();
                     break;
                 case ")":
-                    ts.nextToken();
+                 //   ts.nextToken();
                     break;
 
                 default:
                     pravilo.dodajPreduslov(ts.toString());
-                    ts.nextToken();
+                  //  ts.nextToken();
                     break;
             }//switch end
         }
 
         String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade
-        mb.substring(1);
-        mb.substring(mb.length()-1);
-        double broj = Double.parseDouble(mb);//pretvara se u broj i setuej se MD' ili MD'
+/*
+       mb= mb.substring(1);
+        mb= mb.substring(4);
+*/
+
+        mb= mb.replace("(","");
+        mb= mb.replace(")","");
+//        StringTokenizer stringBroj = new StringTokenizer(mb, "()");
+//        mb= stringBroj.toString();
+
+        /*
+        id = id.replace(".xml", "");
+         */
+
+        double broj = Double.parseDouble(mb);//pretvara se u broj i setuje se MD' ili MD'
         if (broj>0) pravilo.setMB_(broj);
         else  pravilo.setMD_(broj);
         pravilo.setZakljucak(new Zakljucak( ts.nextToken()));   //dodaje se zakljucak
