@@ -30,13 +30,14 @@ public class ListaZakljucaka implements Serializable {
     }
 
 
-    public boolean dodaj(Zakljucak p) {       //trebalo bi da je dobro...
+    public void dodaj(Zakljucak p) {
 
         ElemZakljucak novi = new ElemZakljucak(p);
         if (null == prvi) prvi = posl = novi;
-        else posl.sled = novi;
-        posl = posl.sled;
-        return true;
+        else {
+            posl.sled = novi;
+            posl = posl.sled;
+        }
     }
 
 

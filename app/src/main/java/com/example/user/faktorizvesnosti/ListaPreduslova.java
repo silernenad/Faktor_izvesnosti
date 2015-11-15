@@ -18,19 +18,21 @@ public class ListaPreduslova implements Serializable {
         }
 
     }
+
+
+    private ElemPreduslov prvi = null, posl = null; //proveri sta se desava ovde
+
     public ListaPreduslova(){
         prvi = posl = null;
     }
-
-    private ElemPreduslov prvi = null, posl = null;
-
-    public boolean dodaj(String s) {         //mozda traba void!!!!!!!!!!!
+    public void dodaj(String s) {
 
         ElemPreduslov e = new ElemPreduslov(s);
         if (null == prvi) prvi = posl = e;
-        else posl.sled = e;
-        posl = e;
-        return true;
+        else {
+            posl.sled = e;
+            posl = e;
+        }
     }
 
 
@@ -58,7 +60,7 @@ public class ListaPreduslova implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         ElemPreduslov tek = prvi;
         while (null != tek) {
-            stringBuilder.append("/n" + tek.naziv);
+            stringBuilder.append(tek.naziv + "\n");
             tek = tek.sled;
         }
         return stringBuilder.toString();

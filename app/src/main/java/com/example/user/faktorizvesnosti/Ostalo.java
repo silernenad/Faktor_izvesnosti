@@ -25,13 +25,13 @@ public class Ostalo extends AppCompatActivity {
         */
 
         /*** PROVERA DA LI TADI SLANJE I STAMPANJE LISTE_PRAVILA ***/
-
+/*
         Intent intent = getIntent();
         ListaPravila listaPravila = (ListaPravila) intent.getSerializableExtra("listapravila");
 
         final EditText test = (EditText) findViewById(R.id.opazanjaInput);
         test.setText(listaPravila.toString());
-
+*/
     }
     public void onClick(View view){
 
@@ -58,7 +58,7 @@ public class Ostalo extends AppCompatActivity {
 
 
        /*********** ODAVDE ************/
-
+/*
         int a = 10;
         i.putExtra("broj", a);
 
@@ -66,8 +66,7 @@ public class Ostalo extends AppCompatActivity {
 
         Zakljucak zakljucak = new Zakljucak("Radi");
         i.putExtra("nesto",zakljucak);
-
-
+*/
         /*********** DOVDE ************/
         /** MOZE DA SE OBRISE **/
 

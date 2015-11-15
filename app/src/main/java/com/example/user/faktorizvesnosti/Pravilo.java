@@ -43,7 +43,12 @@ public class Pravilo implements Serializable {
     public int getRedniBr() {
         return redniBr;
     }
+    /*
+    public ListaPreduslova getPreduslov(){
+        return preduslov;
+    }
 
+*/
 
 
     public void setMD_(double MD_) {
@@ -80,7 +85,7 @@ public class Pravilo implements Serializable {
         setRedniBr(0);
         setZakljucak(new Zakljucak());
         preduslov = new ListaPreduslova();
-
+        //preduslov.clear();
     }
 
     public String toSting(){
@@ -88,9 +93,9 @@ public class Pravilo implements Serializable {
         if (getMB_()!=0)broj=getMB_();
         else broj=getMD_();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("P" + redniBr + "/n" + "AKO /n");
-        stringBuilder.append(preduslov + "/n ONDA (" + broj + ") /n" );
-        stringBuilder.append(zakljucak);
+        stringBuilder.append("P" + redniBr + ":\n" + "AKO \n");
+        stringBuilder.append(preduslov.toString() + "ONDA (" + broj + ") \n" );
+        stringBuilder.append(getZakljucak().toString());
         return stringBuilder.toString();
     }
 
