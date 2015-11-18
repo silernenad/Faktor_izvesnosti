@@ -4,7 +4,7 @@ package com.example.user.faktorizvesnosti;
 import java.io.Serializable;
 
 public class ListaPreduslova implements Serializable {
-
+/*
     private static class ElemPreduslov {
         public String naziv;
         public ElemPreduslov sled = null;
@@ -16,12 +16,11 @@ public class ListaPreduslova implements Serializable {
             naziv = s;
             sled = e;
         }
-
     }
-
-
+*/
     private ElemPreduslov prvi = null, posl = null; //proveri sta se desava ovde
-
+    private ElemPreduslov tek = null;
+    
     public ListaPreduslova(){
         prvi = posl = null;
     }
@@ -35,12 +34,14 @@ public class ListaPreduslova implements Serializable {
         }
     }
 
-
+    public ElemPreduslov prvi(){
+        return prvi;
+    }
 
     public void izbaci(ElemPreduslov e){        //vidi da li treba boolean da vidis da li je uopste i postojao
         ElemPreduslov tek = prvi, pret = null;
         while (null!=tek)
-            if (tek.naziv.equals(e.naziv)){
+            if (tek.getNaziv().equals(e.getNaziv())){
                 pret = tek; tek = tek.sled;
             }
             else {
@@ -60,7 +61,7 @@ public class ListaPreduslova implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         ElemPreduslov tek = prvi;
         while (null != tek) {
-            stringBuilder.append(tek.naziv + "\n");
+            stringBuilder.append(tek.getNaziv() + "\n");
             tek = tek.sled;
         }
         return stringBuilder.toString();

@@ -44,17 +44,19 @@ public class Resenje extends AppCompatActivity {
         probaj sa ovim (sting, "\t\n\r ")
 
         */
+        /***    UNOS PRAVILA    ***/
 
-
-  //      ListaPravila listaPravila = new ListaPravila();         //lista svih pravila
+  //      ListaPravila listaPravila = new ListaPravila();           //lista svih pravila
 
         ListaPravila2 listaPravila = new ListaPravila2();
-        Pravilo novoPravilo = new Pravilo();                    //pravilo koje ce se ubacivati u listu
+        Pravilo novoPravilo = new Pravilo();                        //pravilo koje ce se ubacivati u listu
+        ListaZakljucaka2 listaZakljucaka = new ListaZakljucaka2();  //lista svih zakljucaka pravila
+
         //cita se sa ulaza i pravi se novo pravilo
 
         StringTokenizer ts = new StringTokenizer(pravilaMessage );
         while (ts.hasMoreTokens()){
-            traziPreduslov(ts, novoPravilo); //trazi jedno pravilo sa ulaza
+            traziPreduslov(ts, novoPravilo, listaZakljucaka); //trazi jedno pravilo sa ulaza
 
             novoPravilo.setujRedneBrojeveZiP(id++);
 
@@ -62,10 +64,30 @@ public class Resenje extends AppCompatActivity {
 
 
             /**ostaje da se jos nameste stekovi**/
-
         }
 
-        resenjeText.setText(listaPravila.getFirst().toSting() );
+        /***    UNOS OPAZANJA    ***/
+        StringTokenizer opazanja = new StringTokenizer(opazanjaMessage);
+
+        Pravilo p = listaPravila.getFirst();
+        String tekOpazanje;
+
+
+
+        
+        ElemPreduslov elemPreduslov;
+
+/*
+        while (opazanja.hasMoreTokens()) {                              //doklegod ima jos tokena
+            for (int i = 0; p != null; p = listaPravila.get(i), i++) {  //krece se kroz listu pravila
+                for (elemPreduslov = p.preduslov.prvi(); elemPreduslov != null; elemPreduslov = elemPreduslov.sled) {   //krece se kroz listu preduslova
+
+                }
+            }
+        }
+*/
+
+        resenjeText.setText("\n"+opazanja.nextToken() );
 
 
 
@@ -89,7 +111,7 @@ public class Resenje extends AppCompatActivity {
 
 
 
-    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo){        //prebacio sam sve retrurn u breack!!!!!!!!!1
+    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo, ListaZakljucaka2 listaZakljucaka){        //prebacio sam sve retrurn u breack!!!!!!!!!1
         pravilo.reset();
         while (!ts.nextToken().equals("AKO")  ){
             if(!ts.hasMoreTokens())break;// return;
@@ -100,11 +122,11 @@ public class Resenje extends AppCompatActivity {
         //   if(!ts.hasMoreTokens()) return;
 
         String s = ts.nextToken();
-        while (!s.toUpperCase().equals("ONDA") && ts.hasMoreTokens()) {     //mozda traba prebaciti na veliak slova!!!!!! toUper
+        while (!s.equals("ONDA") && ts.hasMoreTokens()) {     //vidi za .toUpperCase()
 
 
 
-            switch (s) {
+            switch (s) {    //mozda da stavim s.toUpperCase()
                 case "ILI":
                     //  ts.nextToken();
                     break;
@@ -119,7 +141,7 @@ public class Resenje extends AppCompatActivity {
                     break;
 
                 default:
-                    pravilo.dodajPreduslov(s.toLowerCase());
+                    pravilo.dodajPreduslov(s);
                     //  ts.nextToken();
                     break;
             }//switch end
@@ -134,7 +156,9 @@ public class Resenje extends AppCompatActivity {
             double broj = Double.parseDouble(mb);//pretvara se u broj i setuje se MD' ili MD'
             if (broj > 0) pravilo.setMB_(broj);
             else pravilo.setMD_(broj);
-            pravilo.setZakljucak(new Zakljucak(ts.nextToken()));   //dodaje se zakljucak
+            Zakljucak z = new Zakljucak(ts.nextToken());
+            pravilo.setZakljucak(z);   //dodaje se zakljucak
+            listaZakljucaka.add(z);
 
         }
 
