@@ -5,6 +5,7 @@ public class ElemPreduslov {
     private String naziv;
     private double MB = 0;
     private double MD = 0;
+
     public ElemPreduslov sled = null;
 
 
@@ -18,4 +19,5 @@ public class ElemPreduslov {
 
     public void setMB(double MB) {this.MB = MB;}
     public void setMD(double MD) {this.MD = MD;}
+
 }

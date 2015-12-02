@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+
 public class Ostalo extends AppCompatActivity {
 
     @Override
@@ -14,24 +17,6 @@ public class Ostalo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ostalo);
 
-        //ako hocu da prevucem preduslove da bi se samo unele verovatnoce
-        /*
-        Bundle applesData = getIntent().getExtras();
-        if (null==applesData) {
-            return;
-        }
-        String applesMessage = applesData.getString("appleMessage");
-        final TextView baconText = (TextView) findViewById(R.id.opazanjaInput);
-        */
-
-        /*** PROVERA DA LI TADI SLANJE I STAMPANJE LISTE_PRAVILA ***/
-/*
-        Intent intent = getIntent();
-        ListaPravila listaPravila = (ListaPravila) intent.getSerializableExtra("listapravila");
-
-        final EditText test = (EditText) findViewById(R.id.opazanjaInput);
-        test.setText(listaPravila.toString());
-*/
     }
     public void onClick(View view){
 
@@ -55,20 +40,6 @@ public class Ostalo extends AppCompatActivity {
         final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
         String zakljucakMessage = zakljucakInput.getText().toString();
         i.putExtra("zakljucak", zakljucakMessage);
-
-
-       /*********** ODAVDE ************/
-/*
-        int a = 10;
-        i.putExtra("broj", a);
-
-
-
-        Zakljucak zakljucak = new Zakljucak("Radi");
-        i.putExtra("nesto",zakljucak);
-*/
-        /*********** DOVDE ************/
-        /** MOZE DA SE OBRISE **/
 
         startActivity(i);
 

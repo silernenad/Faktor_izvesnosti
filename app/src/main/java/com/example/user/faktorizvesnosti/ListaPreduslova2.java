@@ -1,6 +1,8 @@
 package com.example.user.faktorizvesnosti;
 
 
+/**  OVA LISTA JE DOBRA   */
+
 import java.util.LinkedList;
 
 public class ListaPreduslova2 extends LinkedList<String> {
@@ -10,16 +12,12 @@ public class ListaPreduslova2 extends LinkedList<String> {
     }
 
 public String toString(){
-    String s = getFirst();
-    StringBuilder stringBuilder = new StringBuilder();
+    String s =super.toString();
+    s=s.replace("[", "");
+    s=s.replace("]", "");
+    return s;
 
 
-    for (int i =0; s!=null ;i++) {
-        stringBuilder.append(s + "\n");
-        s = get(i);
-
-    }
-    return stringBuilder.toString();
 }
 
 }

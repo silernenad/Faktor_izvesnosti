@@ -11,12 +11,14 @@ public class Pravilo implements Serializable {
     private double MD_ =0;
     private double MB = 0;
     private double MD = 0;
-    public ListaPreduslova preduslov;
+    public ListaPreduslova2 preduslov;
+ //   public ListaPreduslova preduslov;
     private Zakljucak zakljucak;
     private int redniBr;
 
     public Pravilo() {
-        preduslov = new ListaPreduslova();
+      //  preduslov = new ListaPreduslova();
+        preduslov = new ListaPreduslova2();
         zakljucak = new Zakljucak();
     }
 
@@ -71,7 +73,9 @@ public class Pravilo implements Serializable {
     }
 
     public void dodajPreduslov(String s){
-        preduslov.dodaj(s);
+
+        //preduslov.dodaj(s);
+        preduslov.add(s);
     }
 
     public void setujRedneBrojeveZiP(int a){
@@ -84,8 +88,9 @@ public class Pravilo implements Serializable {
         setMD(0.0);
         setRedniBr(0);
         setZakljucak(new Zakljucak());
-        preduslov = new ListaPreduslova();
-        //preduslov.clear();
+       // preduslov = new ListaPreduslova();
+
+        preduslov.clear();
     }
 
     public String toSting(){
