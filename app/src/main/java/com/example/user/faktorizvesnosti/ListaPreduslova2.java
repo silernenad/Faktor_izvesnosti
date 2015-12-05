@@ -2,10 +2,11 @@ package com.example.user.faktorizvesnosti;
 
 
 /**  OVA LISTA JE DOBRA   */
+//stavio sam da bude lista<ElemPreduslov> umesto String...
 
 import java.util.LinkedList;
 
-public class ListaPreduslova2 extends LinkedList<String> {
+public class ListaPreduslova2 extends LinkedList<ElemPreduslov> {
 
     public ListaPreduslova2(){
         super();

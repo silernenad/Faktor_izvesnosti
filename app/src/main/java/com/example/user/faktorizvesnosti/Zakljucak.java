@@ -18,6 +18,15 @@ public class Zakljucak implements Serializable{
         this.naziv = naziv;
     }
     public Zakljucak(){}
+    public Zakljucak(Zakljucak z){
+        this.naziv=z.getNaziv();
+        this.pravila=z.getPravila();
+        this.CF=z.getFaktorI();
+        this.MB=z.getMB();
+        this.MD=z.getMD();
+        this.redniBr=z.getRedniBroj();
+        this.brPravila=z.getBrPravila();
+    }
 
 
     public String getNaziv(){return naziv;}

@@ -75,10 +75,11 @@ public class Pravilo implements Serializable {
     public void dodajPreduslov(String s){
 
         //preduslov.dodaj(s);
-        preduslov.add(s);
+        ElemPreduslov e=new ElemPreduslov(s);
+        preduslov.add(e);
     }
 
-    public void setujRedneBrojeveZiP(int a){
+    public void setujRedniBroj(int a){
         zakljucak.setRedniBroj(a);
         setRedniBr(a);
     }

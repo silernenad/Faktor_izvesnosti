@@ -6,7 +6,7 @@ public class ElemPreduslov {
     private double MB = 0;
     private double MD = 0;
 
-    public ElemPreduslov sled = null;
+ //   public ElemPreduslov sled = null;
 
 
     public ElemPreduslov(){}

@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class Resenje extends AppCompatActivity {
 
     static int id=1;
+    static int idZak=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +26,20 @@ public class Resenje extends AppCompatActivity {
         String zakljucakMessage = data.getString("zakljucak");
         String pravilaMessage = data.getString("pravila");
 
-
-
         final TextView resenjeText = (TextView) findViewById(R.id.resenjeOutput);
 
 
-
         ////////////////////////////////////////////////////////////////////////
- //       int id =1;
 
-/*
-        String url = "http://howtodoinjava.com/java-initerview-questions";  ako nesto nije u redu moze i ovako da se deli
+
+/*      String url = "http://howtodoinjava.com/java-initerview-questions";  ako nesto nije u redu moze i ovako da se deli
         StringTokenizer multiTokenizer = new StringTokenizer(url, "://.-");
         probaj sa ovim (sting, "\t\n\r ")
-
-        */
+ */
         /***    UNOS PRAVILA    ***/
 
-  //      ListaPravila listaPravila = new ListaPravila();           //lista svih pravila
 
-        ListaPravila2 listaPravila = new ListaPravila2();
+        ListaPravila2 listaPravila = new ListaPravila2();        //lista svih pravila
 
         ListaZakljucaka2 listaZakljucaka = new ListaZakljucaka2();  //lista svih zakljucaka pravila
 
@@ -56,27 +49,56 @@ public class Resenje extends AppCompatActivity {
         while (ts.hasMoreTokens()){
             Pravilo novoPravilo = new Pravilo();
                                   //pravilo koje ce se ubacivati u listu
-            traziPreduslov(ts, novoPravilo, listaZakljucaka); //trazi jedno pravilo sa ulaza
+            traziPreduslov(ts, novoPravilo, listaZakljucaka, listaPravila); //trazi jedno pravilo sa ulaza
 
-            novoPravilo.setujRedneBrojeveZiP(id++);
+            novoPravilo.setujRedniBroj(id++);
 
             listaPravila.addLast(novoPravilo);
         }
 
-        /***    UNOS OPAZANJA    ***/
-/*
-        pravilaMessage = pravilaMessage.replace("(", "");
-        pravilaMessage = pravilaMessage.replace(")", "");
-        StringTokenizer opazanja = new StringTokenizer(pravilaMessage);
 
-        while (opazanja.hasMoreTokens()){
-            ..........
+        //sredjivanje rednih brojeva
+
+        for (int i = 0; i < listaZakljucaka.size(); i++) {
+            listaZakljucaka.get(i).setRedniBroj(i+1);
         }
 
 
-*/
-       // resenjeText.setText(listaPravila.getFirst().preduslov.toString() );
-        resenjeText.setText(listaPravila.get(1).getZakljucak().toString());
+
+        //TOKENIZACIJA OPAZANJA
+        opazanjaMessage=opazanjaMessage.replace("(", "");
+        opazanjaMessage=opazanjaMessage.replace(")", "");
+
+        StringTokenizer opazanja = new StringTokenizer(opazanjaMessage );
+
+        boolean nasao=false;
+
+        while (opazanja.hasMoreTokens()) {
+            Pravilo tekPravilo;
+            for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
+                tekPravilo = listaPravila.get(i);
+                String tekPred;
+                for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
+                    tekPred = tekPravilo.preduslov.get(j).getNaziv();
+
+                    if (tekPred.equals(opazanja.nextToken())){
+                        String a = opazanja.nextToken();
+                        double broj = Double.parseDouble(a);
+                        tekPravilo.preduslov.get(j).setMB(broj);
+                    }
+
+                }
+            }
+        }
+
+        //ZAKLJUCAK KOJI SE TRAZI
+
+        Zakljucak glavni=new Zakljucak(zakljucakMessage);
+
+
+
+
+        resenjeText.setText(glavni.getNaziv());
 
     }
 
@@ -97,21 +119,19 @@ public class Resenje extends AppCompatActivity {
 
 
 
-    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo, ListaZakljucaka2 listaZakljucaka){
+    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo,
+                               ListaZakljucaka2 listaZakljucaka,ListaPravila2 listaPravila ){
         pravilo.reset();
         while (!ts.nextToken().equals("AKO")  ){
-            if(!ts.hasMoreTokens())break;// return;
+            if(!ts.hasMoreTokens())break;
 
         }
 
-
-        //   if(!ts.hasMoreTokens()) return;
-
         String s = ts.nextToken();
-        while (!s.equals("ONDA") && ts.hasMoreTokens()) {     //vidi za .toUpperCase()
+        while (!s.equals("ONDA") && ts.hasMoreTokens()) {
 
 
-            switch (s) {    //mozda da stavim s.toUpperCase()
+            switch (s) {
                 case "ILI":
                     //  ts.nextToken();
                     break;
@@ -129,7 +149,7 @@ public class Resenje extends AppCompatActivity {
                     pravilo.dodajPreduslov(s);
                     //  ts.nextToken();
                     break;
-            }//switch end
+            }
             s=ts.nextToken();
         }
         if (ts.hasMoreTokens()) {
@@ -141,35 +161,40 @@ public class Resenje extends AppCompatActivity {
             double broj = Double.parseDouble(mb);//pretvara se u broj i setuje se MD' ili MD'
             if (broj > 0) pravilo.setMB_(broj);
             else pravilo.setMD_(broj);
-            Zakljucak z = new Zakljucak(ts.nextToken());
-            pravilo.setZakljucak(z);   //dodaje se zakljucak   Proveri!!!
 
-            Zakljucak zakljucak=z;
+            /*     UBACIVANJE ZAKLJUCKA U LISTU PRAVILA    */
 
-            if (!listaZakljucaka.isEmpty()) {
+            Zakljucak zakljucak = new Zakljucak(ts.nextToken());
 
-                Zakljucak tek = listaZakljucaka.getFirst();
+            if (!listaZakljucaka.isEmpty()) {                   //lista nije prazna
+
+                Zakljucak tek;
                 int i;
-                for (i = 0; i < listaZakljucaka.size(); i++) {      //lista nije prazna
-                    if (tek.jednako(zakljucak)) {
+                boolean nasao=false;
+                for ( i = 0; i < listaZakljucaka.size(); i++) {  //trazi zakljucak u listi zakljucaka
+                    tek = listaZakljucaka.get(i);
+                    if (tek.jednako(zakljucak)) {               //zakljucak nadjen u listi
                         tek.povecajBRojPravila();
                         tek.dodajPravilo(id + " ");
+                        pravilo.setZakljucak(tek);
+                        nasao=true;
                         break;
                     }
-
-
                 }
-                if (i==listaZakljucaka.size()){     //nije pronadjen zakljucak u listi
+                if (!nasao){                            //nije pronadjen zakljucak u listi
                     zakljucak.setPravila(id + " ");
-                    zakljucak.setRedniBroj(listaZakljucaka.getLast().getRedniBroj()+1);
+                    zakljucak.setRedniBroj(idZak++);
                     listaZakljucaka.add(zakljucak);
+                    pravilo.setZakljucak(zakljucak);
+
                 }
 
             }
-            else{       //prazna lista
+            else{                                                 //prazna lista
                 zakljucak.setPravila(id + " ");
-                zakljucak.setRedniBroj(1);
+                zakljucak.setRedniBroj(idZak++);
                 listaZakljucaka.add(zakljucak);
+                pravilo.setZakljucak(zakljucak);
             }
 
         }

@@ -3,6 +3,8 @@ package com.example.user.faktorizvesnosti;
 
 import java.io.Serializable;
 
+/**     NE RADI     **/
+
 public class ListaPreduslova implements Serializable {
 /*
     private static class ElemPreduslov {
@@ -17,7 +19,7 @@ public class ListaPreduslova implements Serializable {
             sled = e;
         }
     }
-*/
+
     private ElemPreduslov prvi = null, posl = null; //proveri sta se desava ovde
     private ElemPreduslov tek = null;
     
@@ -67,4 +69,5 @@ public class ListaPreduslova implements Serializable {
         return stringBuilder.toString();
 
     }
+    */
 }
