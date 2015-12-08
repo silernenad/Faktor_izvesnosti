@@ -60,15 +60,15 @@ public class Resenje extends AppCompatActivity {
         //sredjivanje rednih brojeva
 
         for (int i = 0; i < listaZakljucaka.size(); i++) {
-            listaZakljucaka.get(i).setRedniBroj(i+1);
+            listaZakljucaka.get(i).setRedniBroj(i + 1);
         }
+
 
 
 
         //TOKENIZACIJA OPAZANJA
         opazanjaMessage=opazanjaMessage.replace("(", "");
         opazanjaMessage=opazanjaMessage.replace(")", "");
-
         StringTokenizer opazanja = new StringTokenizer(opazanjaMessage );
 
         boolean nasao=false;
@@ -90,6 +90,12 @@ public class Resenje extends AppCompatActivity {
                 }
             }
         }
+
+        //pravljenje stabla
+        for (int i=0;i<listaPravila.size();i++){
+            listaPravila.get(i).uredi();
+        }
+
 
         //ZAKLJUCAK KOJI SE TRAZI
 
@@ -133,21 +139,21 @@ public class Resenje extends AppCompatActivity {
 
             switch (s) {
                 case "ILI":
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case "I":
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case "(":
-                    //   ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case ")":
-                    //   ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
 
                 default:
                     pravilo.dodajPreduslov(s);
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
             }
             s=ts.nextToken();

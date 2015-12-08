@@ -6,26 +6,47 @@ import java.util.StringTokenizer;
 public class Parser {
 
     static int id=1;
+    static int idZak=1;
 
     public Parser() {
     }
+
+    public void unesiPravila(StringTokenizer ts,
+                             ListaZakljucaka2 listaZakljucaka,ListaPravila2 listaPravila ){
+
+        while (ts.hasMoreTokens()){
+            Pravilo novoPravilo = new Pravilo();
+            //pravilo koje ce se ubacivati u listu
+            traziPreduslov(ts, novoPravilo, listaZakljucaka, listaPravila); //trazi jedno pravilo sa ulaza
+
+            novoPravilo.setujRedniBroj(id++);
+
+            listaPravila.addLast(novoPravilo);
+        }
+
+
+        //sredjivanje rednih brojeva
+
+        for (int i = 0; i < listaZakljucaka.size(); i++) {
+            listaZakljucaka.get(i).setRedniBroj(i+1);
+        }
+
+    }
+
 
     public void traziPreduslov(StringTokenizer ts, Pravilo pravilo,
                                ListaZakljucaka2 listaZakljucaka,ListaPravila2 listaPravila ){
         pravilo.reset();
         while (!ts.nextToken().equals("AKO")  ){
-            if(!ts.hasMoreTokens())break;// return;
+            if(!ts.hasMoreTokens())break;
 
         }
 
-
-        //   if(!ts.hasMoreTokens()) return;
-
         String s = ts.nextToken();
-        while (!s.equals("ONDA") && ts.hasMoreTokens()) {     //vidi za .toUpperCase()
+        while (!s.equals("ONDA") && ts.hasMoreTokens()) {
 
 
-            switch (s) {    //mozda da stavim s.toUpperCase()
+            switch (s) {
                 case "ILI":
                     //  ts.nextToken();
                     break;
@@ -43,7 +64,7 @@ public class Parser {
                     pravilo.dodajPreduslov(s);
                     //  ts.nextToken();
                     break;
-            }//switch end
+            }
             s=ts.nextToken();
         }
         if (ts.hasMoreTokens()) {
@@ -56,42 +77,67 @@ public class Parser {
             if (broj > 0) pravilo.setMB_(broj);
             else pravilo.setMD_(broj);
 
-            /**     UBACIVANJE ZAKLJUCKA U LISTU PRAVILA    **/
+            /*     UBACIVANJE ZAKLJUCKA U LISTU PRAVILA    */
 
-            Zakljucak z = new Zakljucak(ts.nextToken());
-            pravilo.setZakljucak(z);   //dodaje se zakljucak   Proveri!!!
+            Zakljucak zakljucak = new Zakljucak(ts.nextToken());
 
-            Zakljucak zakljucak=z;
+            if (!listaZakljucaka.isEmpty()) {                   //lista nije prazna
 
-            if (!listaZakljucaka.isEmpty()) {
-
-                Zakljucak tek = listaZakljucaka.getFirst();
+                Zakljucak tek;
                 int i;
-                for (i = 0; i < listaZakljucaka.size(); i++) {      //lista nije prazna
-                    if (tek.jednako(zakljucak)) {
+                boolean nasao=false;
+                for ( i = 0; i < listaZakljucaka.size(); i++) {  //trazi zakljucak u listi zakljucaka
+                    tek = listaZakljucaka.get(i);
+                    if (tek.jednako(zakljucak)) {               //zakljucak nadjen u listi
                         tek.povecajBRojPravila();
                         tek.dodajPravilo(id + " ");
+                        pravilo.setZakljucak(tek);
+                        nasao=true;
                         break;
                     }
-
-
                 }
-                if (i==listaZakljucaka.size()){     //nije pronadjen zakljucak u listi
+                if (!nasao){                            //nije pronadjen zakljucak u listi
                     zakljucak.setPravila(id + " ");
-                    zakljucak.setRedniBroj(listaZakljucaka.getLast().getRedniBroj()+1);
+                    zakljucak.setRedniBroj(idZak++);
                     listaZakljucaka.add(zakljucak);
+                    pravilo.setZakljucak(zakljucak);
+
                 }
 
             }
-            else{       //prazna lista
+            else{                                                 //prazna lista
                 zakljucak.setPravila(id + " ");
-                zakljucak.setRedniBroj(1);
+                zakljucak.setRedniBroj(idZak++);
                 listaZakljucaka.add(zakljucak);
+                pravilo.setZakljucak(zakljucak);
             }
 
         }
 
     }
+
+    public void unesiOpazanja(StringTokenizer opazanja,ListaPravila2 listaPravila){
+        boolean nasao=false;
+
+        while (opazanja.hasMoreTokens()) {
+            Pravilo tekPravilo;
+            for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
+                tekPravilo = listaPravila.get(i);
+                String tekPred;
+                for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
+                    tekPred = tekPravilo.preduslov.get(j).getNaziv();
+
+                    if (tekPred.equals(opazanja.nextToken())){
+                        String a = opazanja.nextToken();
+                        double broj = Double.parseDouble(a);
+                        tekPravilo.preduslov.get(j).setMB(broj);
+                    }
+
+                }
+            }
+        }
+    }
+
 
 
 }

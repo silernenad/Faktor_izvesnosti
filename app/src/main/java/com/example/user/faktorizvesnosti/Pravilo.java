@@ -3,6 +3,7 @@ package com.example.user.faktorizvesnosti;
 
 import java.io.Serializable;
 import java.security.PublicKey;
+import java.util.StringTokenizer;
 
 
 public class Pravilo implements Serializable {
@@ -15,17 +16,23 @@ public class Pravilo implements Serializable {
  //   public ListaPreduslova preduslov;
     private Zakljucak zakljucak;
     private int redniBr;
+    private Stablo koren;
+    String izraz=" ";
 
     public Pravilo() {
       //  preduslov = new ListaPreduslova();
         preduslov = new ListaPreduslova2();
         zakljucak = new Zakljucak();
+        koren = new Stablo();
     }
 
 
 
     public double getMB_() {
         return MB_;
+    }
+    public Stablo getKoren(){
+        return koren;
     }
 
 
@@ -45,6 +52,7 @@ public class Pravilo implements Serializable {
     public int getRedniBr() {
         return redniBr;
     }
+    public String getIzraz(){return izraz;}
     /*
     public ListaPreduslova getPreduslov(){
         return preduslov;
@@ -71,6 +79,12 @@ public class Pravilo implements Serializable {
     public void setRedniBr(int redniBr) {
         this.redniBr = redniBr;
     }
+    public void setIzraz(String a){
+        this.izraz=a;
+    }
+    public void dodajIzraz(String a){
+        this.izraz=this.izraz+a;
+    }
 
     public void dodajPreduslov(String s){
 
@@ -92,6 +106,19 @@ public class Pravilo implements Serializable {
        // preduslov = new ListaPreduslova();
 
         preduslov.clear();
+        setIzraz(" ");
+    }
+
+
+    public ElemPreduslov nadjiPreduslov(String s){
+        ElemPreduslov rez = new ElemPreduslov();
+        for (int i = 0; i<preduslov.size();i++){
+            if (preduslov.get(i).getNaziv().equals(s)) {
+                rez = preduslov.get(i);
+                break;
+            }
+        }
+        return rez;
     }
 
     public String toSting(){
@@ -103,6 +130,46 @@ public class Pravilo implements Serializable {
         stringBuilder.append(preduslov.toString() + "ONDA (" + broj + ") \n" );
         stringBuilder.append(getZakljucak().toString());
         return stringBuilder.toString();
+        }
+
+
+    public void uredi(){    //pravi stabli od Stringa preduslova
+        String string=getIzraz();
+        StringTokenizer ts = new StringTokenizer(string);
+
+        Stablo koren=getKoren();
+        while(ts.hasMoreTokens()){
+            String s;
+            s=ts.nextToken();
+            switch (s){
+                case "(":                //naisao na otvorenu zagradu ubacuje novo dete u stablo
+                    koren.dete.add(new Stablo());
+                    int a =koren.getNum()+1;
+                    koren.setNum(a);
+
+                    while (!(s=ts.nextToken()).equals(")")){
+                        if (s.equals("I") || s.equals("ILI")){
+                            koren.dete.getLast().setOperacija(s);
+                        }
+                        else
+                            dodajOperand(koren.dete.getLast(), nadjiPreduslov(s));
+                    }
+                    break;
+                case "I":
+                    koren.setOperacija(s);
+                    break;
+                case "ILI":
+                    koren.setOperacija(s);
+                    break;
+                default:
+                    dodajOperand(koren, nadjiPreduslov(s));
+                    break;
+            }   //end switch
+        }
+    }
+
+    public void dodajOperand(Stablo stablo, ElemPreduslov e){
+        stablo.operandi.add(e);
     }
 
 }

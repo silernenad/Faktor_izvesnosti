@@ -12,13 +12,13 @@ public class ListaPreduslova2 extends LinkedList<ElemPreduslov> {
         super();
     }
 
-public String toString(){
-    String s =super.toString();
-    s=s.replace("[", "");
-    s=s.replace("]", "");
-    return s;
-
-
+    public String toString(){
+        String s =super.toString();
+        s=s.replace("[", "");
+        s=s.replace("]", "");
+        return s;
 }
+
+
 
 }

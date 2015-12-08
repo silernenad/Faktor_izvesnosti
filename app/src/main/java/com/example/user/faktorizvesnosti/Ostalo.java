@@ -113,21 +113,21 @@ public class Ostalo extends AppCompatActivity {
 
             switch (s) {
                 case "ILI":
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case "I":
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case "(":
-                    //   ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
                 case ")":
-                    //   ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
 
                 default:
                     pravilo.dodajPreduslov(s);
-                    //  ts.nextToken();
+                    pravilo.dodajIzraz(s +" ");
                     break;
             }//switch end
             s=ts.nextToken();
