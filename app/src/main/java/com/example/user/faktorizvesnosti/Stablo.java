@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class Stablo {
-    private String operacija;
+    private String operacija="I";
     public LinkedList<ElemPreduslov> operandi;
     public LinkedList<Stablo> dete;
     private int num=0;
@@ -40,7 +40,7 @@ public class Stablo {
             if (operandi.size()!=0)
                 for (int i = 0;i<operandi.size();i++)
                     min=Math.min(operandi.get(i).getMB(), min);
-            if (dete.size()!=0){
+            if (dete.size()!=0){                                                                    //zasto je ovde usao?????
                 for (int i =0;i<dete.size();i++)
                     min=Math.max(min,dete.get(i).racunajMB());
             }

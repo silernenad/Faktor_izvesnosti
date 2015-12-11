@@ -74,6 +74,7 @@ public class Resenje extends AppCompatActivity {
         boolean nasao=false;
 
         while (opazanja.hasMoreTokens()) {
+            String s=opazanja.nextToken();
             Pravilo tekPravilo;
             for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
                 tekPravilo = listaPravila.get(i);
@@ -81,12 +82,12 @@ public class Resenje extends AppCompatActivity {
                 for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
                     tekPred = tekPravilo.preduslov.get(j).getNaziv();
 
-                    if (tekPred.equals(opazanja.nextToken())){
+                    if (tekPred.equals(s)){                                      //ovo je nesto sumnjivo
                         String a = opazanja.nextToken();
                         double broj = Double.parseDouble(a);
                         if (broj>=0)tekPravilo.preduslov.get(j).setMB(broj);
                         else tekPravilo.preduslov.get(j).setMD(broj);
-
+                        break;
                     }
 
                 }
@@ -111,6 +112,7 @@ public class Resenje extends AppCompatActivity {
         }
 
         //izracunavanje
+        int a=2;
 
         glavni.izracunaj(listaPravila,listaZakljucaka);
 
@@ -128,7 +130,7 @@ public class Resenje extends AppCompatActivity {
 
 
 
-        resenjeText.setText(glavni.getNaziv());
+        resenjeText.setText(Double.toString(glavni.getFaktorI()));
 
     }
 

@@ -69,12 +69,21 @@ public class Zakljucak implements Serializable{
             int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
             Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
             //prolazi se kroz preduslove tekuceg pravila da se vidi da li su inicijalizovani
-            for (int j = 0;i<tekPravilo.preduslov.size();j++){
+            for (int j = 0;j<tekPravilo.preduslov.size();j++){
                 ElemPreduslov tekElem=tekPravilo.preduslov.get(j);
                 if (0==tekElem.getMB() && 0== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
                     Zakljucak tekZakljucak = listaZakljucaka.nadji(tekElem.getNaziv());
                     tekZakljucak.izracunaj(listaPravila,listaZakljucaka);
+                    //izracunao je zakljucka koji je u stvati preduslov
+                    //sad treba upisati te vrednosti u tekElem
+
+                    //vidi da li radi...
+
+                    tekElem.setMB(tekZakljucak.getMB());
+                    tekElem.setMD(tekZakljucak.getMD());
                 }
+
+                /*
 
                 //ovde su svi preduslovi definisani tj nisu zakljucci
                 //sad treba izracunati MB(eP1) i MD(eP1)
@@ -82,26 +91,58 @@ public class Zakljucak implements Serializable{
 
                 double broj=tekPravilo.getKoren().racunajMB();
                 tekPravilo.setMB_P(broj);
-                broj=tekPravilo.getKoren().racunajMD();
-                tekPravilo.setMD_P(broj);
+                double broj1=tekPravilo.getKoren().racunajMD();
+                tekPravilo.setMD_P(broj1);
 
                 //MB(z1,eP1) i MD(z1,eP1)
 
-                broj=tekPravilo.getMB_() * tekPravilo.getMB_P();
-                tekPravilo.setMB(broj);
+                double broj2=tekPravilo.getMB_() * tekPravilo.getMB_P();
+                tekPravilo.setMB(broj2);
 
-                broj=tekPravilo.getMB_P()-tekPravilo.getMD_P();
-                broj=tekPravilo.getMD_() * Math.max(0,broj);
-                tekPravilo.setMD(broj);
-
+                double broj3=tekPravilo.getMB_P()-tekPravilo.getMD_P();
+                broj3=tekPravilo.getMD_() * Math.max(0,broj3);
+                tekPravilo.setMD(broj3);
+*/
             }
 
+            //sada su svi preduslovi definisani tj nisu zakljucci
+            //sad treba izracunati MB(eP1) i MD(eP1)
+            //racunamo preko stabla
+
+            double broj=tekPravilo.getKoren().racunajMB();
+            tekPravilo.setMB_P(broj);
+            double broj1=tekPravilo.getKoren().racunajMD();
+            tekPravilo.setMD_P(broj1);
+
+            //MB(z1,eP1) i MD(z1,eP1)
+
+            double broj2=tekPravilo.getMB_() * tekPravilo.getMB_P();
+            tekPravilo.setMB(broj2);
+
+            double broj3=tekPravilo.getMB_P()-tekPravilo.getMD_P();
+            broj3=tekPravilo.getMD_() * Math.max(0,broj3);
+            tekPravilo.setMD(broj3);
+
         }
+
+        //ovde se racuna MB i MB za zakljucak
 
         token =new StringTokenizer(pravila);
 
         //zakljucak.MB predstavlja MB(z1,eP1) tj pravilo.MB
 
+
+
+
+
+
+
+
+
+
+
+
+        /*
         int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
         Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
         double broj=tekPravilo.getMB();
@@ -114,13 +155,43 @@ public class Zakljucak implements Serializable{
             tek = Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
             tekPravilo = listaPravila.get(tek - 1);     //dohvata to pravilo
 
-            broj = getMB() + tekPravilo.getMB() + getMB() * tekPravilo.getMB();
+            broj = getMB() + tekPravilo.getMB() - getMB() * tekPravilo.getMB();
             setMB(broj);
-            broj=getMD() + tekPravilo.getMD() + getMD() * tekPravilo.getMD();
+            broj=getMD() + tekPravilo.getMD() - getMD() * tekPravilo.getMD();
             setMB(broj);
         }
         broj=getMB()-getMD();
         setFaktorI(broj);
+*/
+
+
+
+
+        if (brPravila==1){
+            int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
+            Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
+            double broj1=tekPravilo.getMB();
+            setMB(broj1);
+            double broj2=tekPravilo.getMD();
+            setMD(broj2);
+        }
+        else{
+            int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
+            Pravilo tekPravilo=listaPravila.get(tek - 1);     //dohvata to pravilo
+            double a1=tekPravilo.getMB();
+            double a2=tekPravilo.getMD();
+
+            tek = Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
+            tekPravilo = listaPravila.get(tek - 1);     //dohvata to pravilo
+            double a3 =  a1 + tekPravilo.getMB() - a1 * tekPravilo.getMB();
+            double a4 = a2 + tekPravilo.getMD() - a2 * tekPravilo.getMD();
+            setMB(a3);
+            setMD(a4);
+
+        }
+        double cf= getMB()-getMD();
+        setFaktorI(cf);
+
 
         }
 
