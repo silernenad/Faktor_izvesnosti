@@ -23,13 +23,68 @@ public class Stablo {
         this.num=a;
     }
 
+    public double racunajMB(){
+        if (operacija.equals("ILI")){
+            double max=-2.0;
+            if (operandi.size()!=0)
+                for (int i = 0;i<operandi.size();i++)
+                    max=Math.max(operandi.get(i).getMB(), max);
+            if (dete.size()!=0){
+                for (int i =0;i<dete.size();i++)
+                    max=Math.max(max,dete.get(i).racunajMB());
+            }
+            return max;
+        }
+        else if (operacija.equals("I")){
+            double min = 2.0;
+            if (operandi.size()!=0)
+                for (int i = 0;i<operandi.size();i++)
+                    min=Math.min(operandi.get(i).getMB(), min);
+            if (dete.size()!=0){
+                for (int i =0;i<dete.size();i++)
+                    min=Math.max(min,dete.get(i).racunajMB());
+            }
+            return min;
+        }
+        else {          //sluvaj kada se preduslov pravila sastoji iz samo jednog elementa
+            return operandi.getFirst().getMB();
+        }
+    }
 
+
+    public double racunajMD(){      //npr MD(eP1)
+        if (operacija.equals("ILI")){
+            double min = 2.0;
+            if (operandi.size()!=0)
+                for (int i = 0;i<operandi.size();i++)
+                    min=Math.min(operandi.get(i).getMD(), min);
+            if (dete.size()!=0){
+                for (int i =0;i<dete.size();i++)
+                    min=Math.max(min,dete.get(i).racunajMD());
+            }
+            return min;
+        }
+        else if (operacija.equals("I")){
+            double max=-2.0;
+            if (operandi.size()!=0)
+                for (int i = 0;i<operandi.size();i++)
+                    max=Math.max(operandi.get(i).getMD(),max);
+            if (dete.size()!=0){
+                for (int i =0;i<dete.size();i++)
+                    max=Math.max(max,dete.get(i).racunajMD());
+            }
+            return max;
+        }
+        else {
+            return operandi.getFirst().getMD();
+        }
+
+    }
 
 
 
     public int getNum(){
         return num;
     }
-
 
 }

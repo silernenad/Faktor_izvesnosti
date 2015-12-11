@@ -3,7 +3,7 @@ package com.example.user.faktorizvesnosti;
 
 public class ElemPreduslov {
     private String naziv;
-    private double MB = 0;
+    private double MB = 0;      //MB(e1)
     private double MD = 0;
 
  //   public ElemPreduslov sled = null;

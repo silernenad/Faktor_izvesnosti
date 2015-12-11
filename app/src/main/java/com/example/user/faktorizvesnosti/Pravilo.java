@@ -8,10 +8,12 @@ import java.util.StringTokenizer;
 
 public class Pravilo implements Serializable {
 
-    private double MB_ =0;        //MB' je MB_          //faktorI kod simulatora
+    private double MB_ =0;          //MB'(z1,eP1)          //faktorI kod simulatora
     private double MD_ =0;
-    private double MB = 0;
+    private double MB = 0;          //MB(z1,eP1)
     private double MD = 0;
+    private double MB_P = 0;         //MB(eP1)
+    private double MD_P = 0;
     public ListaPreduslova2 preduslov;
  //   public ListaPreduslova preduslov;
     private Zakljucak zakljucak;
@@ -53,13 +55,12 @@ public class Pravilo implements Serializable {
         return redniBr;
     }
     public String getIzraz(){return izraz;}
-    /*
-    public ListaPreduslova getPreduslov(){
-        return preduslov;
-    }
+    public double getMB_P(){return MB_P;}
+    public double getMD_P(){return MD_P;}
 
-*/
 
+    public void setMB_P(double broj){this.MB_P=broj; }
+    public void setMD_P(double broj){this.MD_P=broj; }
 
     public void setMD_(double MD_) {
         this.MD_ = MD_;
@@ -171,5 +172,8 @@ public class Pravilo implements Serializable {
     public void dodajOperand(Stablo stablo, ElemPreduslov e){
         stablo.operandi.add(e);
     }
+
+
+
 
 }

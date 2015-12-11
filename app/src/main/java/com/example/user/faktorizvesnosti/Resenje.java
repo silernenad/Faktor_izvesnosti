@@ -84,7 +84,9 @@ public class Resenje extends AppCompatActivity {
                     if (tekPred.equals(opazanja.nextToken())){
                         String a = opazanja.nextToken();
                         double broj = Double.parseDouble(a);
-                        tekPravilo.preduslov.get(j).setMB(broj);
+                        if (broj>=0)tekPravilo.preduslov.get(j).setMB(broj);
+                        else tekPravilo.preduslov.get(j).setMD(broj);
+
                     }
 
                 }
@@ -96,10 +98,32 @@ public class Resenje extends AppCompatActivity {
             listaPravila.get(i).uredi();
         }
 
+        //MD i MB zaljucaka pokazuju na MD i MB preduslova koji su u stvari zakljucci
+        listaPravila.urediPreduslove(listaZakljucaka);
+
 
         //ZAKLJUCAK KOJI SE TRAZI
 
         Zakljucak glavni=new Zakljucak(zakljucakMessage);
+        for (int i=0;i<listaZakljucaka.size();i++){
+            if (listaZakljucaka.get(i).getNaziv().equals(glavni.getNaziv()))
+                glavni = listaZakljucaka.get(i);
+        }
+
+        //izracunavanje
+
+        glavni.izracunaj(listaPravila,listaZakljucaka);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -206,10 +230,5 @@ public class Resenje extends AppCompatActivity {
         }
 
     }
-
-
-
-
-
 
 }
