@@ -114,6 +114,7 @@ public class Zakljucak implements Serializable{
             double broj1=tekPravilo.getKoren().racunajMD();
             tekPravilo.setMD_P(broj1);
 
+
             //MB(z1,eP1) i MD(z1,eP1)
 
             double broj2=tekPravilo.getMB_() * tekPravilo.getMB_P();

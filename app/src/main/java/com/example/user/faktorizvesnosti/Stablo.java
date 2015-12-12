@@ -27,8 +27,13 @@ public class Stablo {
         if (operacija.equals("ILI")){
             double max=-2.0;
             if (operandi.size()!=0)
-                for (int i = 0;i<operandi.size();i++)
-                    max=Math.max(operandi.get(i).getMB(), max);
+                for (int i = 0;i<operandi.size();i++) {
+                    if (operandi.get(i).getNegacija()){
+                        max = Math.max(operandi.get(i).getMD(), max);
+                    }
+                    else
+                        max = Math.max(operandi.get(i).getMB(), max);
+                }
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
                     max=Math.max(max,dete.get(i).racunajMB());
@@ -38,8 +43,13 @@ public class Stablo {
         else if (operacija.equals("I")){
             double min = 2.0;
             if (operandi.size()!=0)
-                for (int i = 0;i<operandi.size();i++)
-                    min=Math.min(operandi.get(i).getMB(), min);
+                for (int i = 0;i<operandi.size();i++) {
+                    if (operandi.get(i).getNegacija()){
+                        min = Math.min(operandi.get(i).getMD(), min);
+                    }
+                    else
+                        min = Math.min(operandi.get(i).getMB(), min);
+                }
             if (dete.size()!=0){                                                                    //zasto je ovde usao?????
                 for (int i =0;i<dete.size();i++)
                     min=Math.max(min,dete.get(i).racunajMB());
@@ -55,9 +65,16 @@ public class Stablo {
     public double racunajMD(){      //npr MD(eP1)
         if (operacija.equals("ILI")){
             double min = 2.0;
-            if (operandi.size()!=0)
-                for (int i = 0;i<operandi.size();i++)
-                    min=Math.min(operandi.get(i).getMD(), min);
+            if (operandi.size()!=0){
+                for (int i = 0;i<operandi.size();i++){
+                    if (operandi.get(i).getNegacija())
+                        min=Math.min(operandi.get(i).getMB(), min);
+
+                    else
+                        min=Math.min(operandi.get(i).getMD(), min);
+                }
+            }
+
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
                     min=Math.max(min,dete.get(i).racunajMD());
@@ -67,8 +84,12 @@ public class Stablo {
         else if (operacija.equals("I")){
             double max=-2.0;
             if (operandi.size()!=0)
-                for (int i = 0;i<operandi.size();i++)
-                    max=Math.max(operandi.get(i).getMD(),max);
+                for (int i = 0;i<operandi.size();i++) {
+                    if (operandi.get(i).getNegacija())
+                        max = Math.max(operandi.get(i).getMB(), max);
+                    else
+                        max = Math.max(operandi.get(i).getMD(), max);
+                }
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
                     max=Math.max(max,dete.get(i).racunajMD());

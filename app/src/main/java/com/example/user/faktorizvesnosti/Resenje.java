@@ -11,6 +11,7 @@ public class Resenje extends AppCompatActivity {
 
     static int id=1;
     static int idZak=1;
+    static StringBuilder poruka= new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class Resenje extends AppCompatActivity {
         while (opazanja.hasMoreTokens()) {
             String s=opazanja.nextToken();
             Pravilo tekPravilo;
+            nasao=false;
             for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
                 tekPravilo = listaPravila.get(i);
                 String tekPred;
@@ -87,10 +89,13 @@ public class Resenje extends AppCompatActivity {
                         double broj = Double.parseDouble(a);
                         if (broj>=0)tekPravilo.preduslov.get(j).setMB(broj);
                         else tekPravilo.preduslov.get(j).setMD(broj);
+                        nasao=true;
                         break;
                     }
 
                 }
+                if (nasao)
+                    break;
             }
         }
 
@@ -109,28 +114,88 @@ public class Resenje extends AppCompatActivity {
         for (int i=0;i<listaZakljucaka.size();i++){
             if (listaZakljucaka.get(i).getNaziv().equals(glavni.getNaziv()))
                 glavni = listaZakljucaka.get(i);
+            break;
+        }
+
+
+        poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj()+
+                "="+glavni+" pomocu formule:\n");
+
+        if (glavni.getBrPravila()==1){
+            /*
+            String pravila=glavni.getPravila();
+            StringTokenizer a = new StringTokenizer(pravila);
+            String tek;
+            tek=a.nextToken();
+            poruka.append("CF(z"+ glavni.getRedniBroj()+",eP"+tek+")="+
+                "MB(z"+ glavni.getRedniBroj()+",eP"+tek+") - "+
+                 "MD(z"+ glavni.getRedniBroj()+",eP"+tek+")  "
+            );
+            */
+            poruka.append("CF(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+")="+
+                            "MB(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+") - "+
+                            "MD(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+")  "
+            );
+
+        }
+        else {
+            StringTokenizer a= new StringTokenizer(glavni.getPravila());
+
+            poruka.append("CF(z"+ glavni.getRedniBroj()+")=");
+            StringBuilder stringBuilder=new StringBuilder();
+            while (a.hasMoreTokens()){
+                stringBuilder.append("P"+a.nextToken());
+            }
+             poruka.append("MBcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+") - "+
+                     "MDcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+")");
+
+
+        }
+
+
+        poruka.append("\n na onovu pravila ") ;
+
+        for (int i =0;i<glavni.getBrPravila();i++){
+            StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
+            int brojP=Integer.parseInt(tokenizer.nextToken());
+            int brojZ=glavni.getRedniBroj();
+
+            poruka.append(listaPravila.get(brojP - 1).toSting()+"\n\n")  ;//proveri ovde ne stampa prailo...
+
+            poruka.append("Gde su:\n" +
+                    "MB(z"+brojZ+",eP"+brojP+")- mera poverenje zakljucka z"+brojZ+
+                    " na osnovu pravila P"+brojP+"\n" +
+                    "MD(z"+brojZ+",eP"+brojP+")- mera nepoverenja zakljucka z"+brojZ+
+                    " na osnovu pravila P"+brojP +
+                    "\nMeru poverenja:\n" +
+                    "MB(z"+brojZ+",eP"+brojP+")\n" +
+                    "i mera nepoverenja:\n" +
+                    "MD(z"+brojZ+",eP"+brojP+")\n" +
+                    "zakljucka z"+ brojZ +" na osnovu pravila P"+brojP+"\n" +
+                    "racunaju se pomocu formule:\n\n") ;
+
+            poruka.append("MB(z"+brojZ+",eP"+brojP+") = MB'(z"+brojZ+",eP"+brojP+")* max(0,CF(eP"+brojP+"))\n" +
+                    "MD(z"+brojZ+",eP"+brojP+") = MD'(z" +brojZ+",eP"+brojP+")* max(0,CF(eP"+brojP+"))\n" +
+                    "\n" +
+                    "Gde su:\n" +
+                    "MB'( z"+brojZ+",eP"+brojP+")-mera poverenje zakljucka\n" +
+                    " z"+brojZ+" na osnovu pravila P"+brojP+"\n" +
+                    "MD'( z"+brojZ+",eP"+brojP+")-mera nepoverenja zakljucka\n" +
+                    " z"+brojZ+" na osnovu pravila P"+brojP+"\n" +
+                    "u slucaju potpune izvesnosti pretpostavke\n" +
+                    "pravila P"+brojP+"\n" +
+                    "\n" +
+                    "CF(eP"+brojP+")-faktor izvesnosi pretpostavke \n" +
+                    "pravila P"+brojP+"") ;
+            poruka.append("\ni pravila ");
+
         }
 
         //izracunavanje
-        int a=2;
-
         glavni.izracunaj(listaPravila,listaZakljucaka);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        resenjeText.setText(Double.toString(glavni.getFaktorI()));
+        poruka.append("\n " + glavni.getFaktorI());
+        resenjeText.setText(poruka);
 
     }
 
@@ -176,13 +241,22 @@ public class Resenje extends AppCompatActivity {
                 case ")":
                     pravilo.dodajIzraz(s +" ");
                     break;
+                case "-":
+                    s=ts.nextToken();
+                    pravilo.dodajPreduslov(s);
+                    pravilo.preduslov.getLast().setNegacija(true);
+                    pravilo.dodajIzraz(s +" ");
+                    break;
 
                 default:
                     pravilo.dodajPreduslov(s);
                     pravilo.dodajIzraz(s +" ");
                     break;
             }
+
             s=ts.nextToken();
+            if(s.equals("ONDA"))
+                break;
         }
         if (ts.hasMoreTokens()) {
             String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade

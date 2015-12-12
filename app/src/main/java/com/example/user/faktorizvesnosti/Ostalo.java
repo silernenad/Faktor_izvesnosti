@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class Ostalo extends AppCompatActivity {
@@ -41,6 +43,7 @@ public class Ostalo extends AppCompatActivity {
 
         StringBuilder opazanja=new StringBuilder();
 
+        LinkedList<String> lista=new LinkedList<String>();
 
         boolean nasao=false;
         Pravilo tekPravilo;
@@ -58,9 +61,17 @@ public class Ostalo extends AppCompatActivity {
                         break;
                     }
                 }
-                if (!nasao)opazanja.append(tekPred+" (  )\n");
+ //               if (!nasao)opazanja.append(tekPred+" (  )\n");
+                if (!nasao && !lista.contains(tekPred))
+                    lista.addLast(tekPred);
             }
         }
+
+        for (int i=0;i<lista.size();i++)
+//            opazanja.append(lista.get(i)+ " (  )\n");
+            opazanja.append(lista.get(i)+ "   \n");
+
+
 
     final TextView opazanjaText=(TextView)findViewById(R.id.opazanjaInput);
     opazanjaText.setText(opazanja);
@@ -124,6 +135,11 @@ public class Ostalo extends AppCompatActivity {
                 case ")":
                     pravilo.dodajIzraz(s +" ");
                     break;
+                case "-":
+                    s=ts.nextToken();
+                    pravilo.dodajPreduslov(s);
+                    pravilo.dodajIzraz(s +" ");
+                    break;
 
                 default:
                     pravilo.dodajPreduslov(s);
@@ -131,6 +147,8 @@ public class Ostalo extends AppCompatActivity {
                     break;
             }//switch end
             s=ts.nextToken();
+            if(s.equals("ONDA"))                                    //dodao.......
+                break;
         }
         if (ts.hasMoreTokens()) {
             String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade

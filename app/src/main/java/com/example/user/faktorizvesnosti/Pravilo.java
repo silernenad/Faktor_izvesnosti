@@ -99,7 +99,7 @@ public class Pravilo implements Serializable {
         setRedniBr(a);
     }
 
-    public void reset(){
+    public void reset(){        //da li treba ensto za stablo????????????
         setMB(0.0);
         setMD(0.0);
         setRedniBr(0);
@@ -127,9 +127,12 @@ public class Pravilo implements Serializable {
         if (getMB_()!=0)broj=getMB_();
         else broj=getMD_();
         StringBuilder stringBuilder = new StringBuilder();
+        StringTokenizer ts=new StringTokenizer(izraz);
+
         stringBuilder.append("P" + redniBr + ":\n" + "AKO \n");
-        stringBuilder.append(preduslov.toString() + "ONDA (" + broj + ") \n" );
-        stringBuilder.append(getZakljucak().toString());
+        while (ts.hasMoreTokens())stringBuilder.append(ts.nextToken()+"\n");
+        stringBuilder.append( "ONDA (" + broj + ") \n" );
+        stringBuilder.append(getZakljucak());
         return stringBuilder.toString();
         }
 
