@@ -109,13 +109,15 @@ public class Resenje extends AppCompatActivity {
 
 
         //ZAKLJUCAK KOJI SE TRAZI
-
+/*
         Zakljucak glavni=new Zakljucak(zakljucakMessage);
         for (int i=0;i<listaZakljucaka.size();i++){
             if (listaZakljucaka.get(i).getNaziv().equals(glavni.getNaziv()))
                 glavni = listaZakljucaka.get(i);
             break;
         }
+*/
+        Zakljucak glavni=listaZakljucaka.nadji(zakljucakMessage);
 
 
         poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj()+
@@ -139,12 +141,13 @@ public class Resenje extends AppCompatActivity {
 
         }
         else {
-            StringTokenizer a= new StringTokenizer(glavni.getPravila());
+             ts = new StringTokenizer(glavni.getPravila() );
+
 
             poruka.append("CF(z"+ glavni.getRedniBroj()+")=");
             StringBuilder stringBuilder=new StringBuilder();
-            while (a.hasMoreTokens()){
-                stringBuilder.append("P"+a.nextToken());
+            while (ts.hasMoreTokens()){
+                stringBuilder.append("P"+ts.nextToken());
             }
              poruka.append("MBcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+") - "+
                      "MDcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+")");
@@ -156,8 +159,10 @@ public class Resenje extends AppCompatActivity {
         poruka.append("\n na onovu pravila ") ;
 
         for (int i =0;i<glavni.getBrPravila();i++){
-            StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
-            int brojP=Integer.parseInt(tokenizer.nextToken());
+ //           StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
+            String tek=glavni.getPravila();
+            ts=new StringTokenizer(tek);
+            int brojP=Integer.parseInt(ts.nextToken());
             int brojZ=glavni.getRedniBroj();
 
             poruka.append(listaPravila.get(brojP - 1).toSting()+"\n\n")  ;//proveri ovde ne stampa prailo...
