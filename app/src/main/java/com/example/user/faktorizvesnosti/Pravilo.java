@@ -15,14 +15,14 @@ public class Pravilo implements Serializable {
     private double MB_P = 0;         //MB(eP1)
     private double MD_P = 0;
     public ListaPreduslova2 preduslov;
- //   public ListaPreduslova preduslov;
+
     private Zakljucak zakljucak;
     private int redniBr;
     private Stablo koren;
     String izraz=" ";
 
     public Pravilo() {
-      //  preduslov = new ListaPreduslova();
+
         preduslov = new ListaPreduslova2();
         zakljucak = new Zakljucak();
         koren = new Stablo();
@@ -104,7 +104,7 @@ public class Pravilo implements Serializable {
         setMD(0.0);
         setRedniBr(0);
         setZakljucak(new Zakljucak());
-       // preduslov = new ListaPreduslova();
+
 
         preduslov.clear();
         setIzraz(" ");

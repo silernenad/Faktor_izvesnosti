@@ -75,27 +75,28 @@ public class Resenje extends AppCompatActivity {
         boolean nasao=false;
 
         while (opazanja.hasMoreTokens()) {
+
             String s=opazanja.nextToken();
             Pravilo tekPravilo;
-            nasao=false;
+            //nasao=false;
+            String a = opazanja.nextToken();
+            double broj = Double.parseDouble(a);
+
             for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
                 tekPravilo = listaPravila.get(i);
                 String tekPred;
                 for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
                     tekPred = tekPravilo.preduslov.get(j).getNaziv();
-
                     if (tekPred.equals(s)){                                      //ovo je nesto sumnjivo
-                        String a = opazanja.nextToken();
-                        double broj = Double.parseDouble(a);
                         if (broj>=0)tekPravilo.preduslov.get(j).setMB(broj);
                         else tekPravilo.preduslov.get(j).setMD(broj);
-                        nasao=true;
                         break;
                     }
 
                 }
-                if (nasao)
+              /*  if (nasao)
                     break;
+                    */
             }
         }
 

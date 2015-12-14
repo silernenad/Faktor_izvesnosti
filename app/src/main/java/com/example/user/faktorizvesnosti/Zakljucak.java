@@ -70,7 +70,8 @@ public class Zakljucak implements Serializable{
             Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
             //prolazi se kroz preduslove tekuceg pravila da se vidi da li su inicijalizovani
             for (int j = 0;j<tekPravilo.preduslov.size();j++){
-                ElemPreduslov tekElem=tekPravilo.preduslov.get(j);
+                String tekString =tekPravilo.preduslov.get(j).getNaziv();
+                ElemPreduslov tekElem=tekPravilo.preduslov.nadji(tekString);
                 if (0==tekElem.getMB() && 0== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
                     Zakljucak tekZakljucak = listaZakljucaka.nadji(tekElem.getNaziv());
                     tekZakljucak.izracunaj(listaPravila,listaZakljucaka);

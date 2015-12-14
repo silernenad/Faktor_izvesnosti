@@ -19,6 +19,14 @@ public class ListaPreduslova2 extends LinkedList<ElemPreduslov> {
         return s;
 }
 
+    public ElemPreduslov nadji(String s){
+        for (int i=0;i<size();i++){
+            if (s.equals(get(i).getNaziv()))
+                return get(i);
+        }
+        return null;
+    }
+
 
 
 }

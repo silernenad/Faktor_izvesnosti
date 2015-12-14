@@ -24,6 +24,7 @@ public class Stablo {
     }
 
     public double racunajMB(){
+        double broj=0;
         if (operacija.equals("ILI")){
             double max=-2.0;
             if (operandi.size()!=0)
@@ -38,7 +39,7 @@ public class Stablo {
                 for (int i =0;i<dete.size();i++)
                     max=Math.max(max,dete.get(i).racunajMB());
             }
-            return max;
+            broj= max;
         }
         else if (operacija.equals("I")){
             double min = 2.0;
@@ -52,17 +53,21 @@ public class Stablo {
                 }
             if (dete.size()!=0){                                                                    //zasto je ovde usao?????
                 for (int i =0;i<dete.size();i++)
-                    min=Math.max(min,dete.get(i).racunajMB());
+                    min=Math.min(min,dete.get(i).racunajMB());
             }
-            return min;
+            broj= min;
         }
+        return broj;
+        /*
         else {          //sluvaj kada se preduslov pravila sastoji iz samo jednog elementa
             return operandi.getFirst().getMB();
         }
+        */
     }
 
 
     public double racunajMD(){      //npr MD(eP1)
+        double broj = 0;
         if (operacija.equals("ILI")){
             double min = 2.0;
             if (operandi.size()!=0){
@@ -77,9 +82,9 @@ public class Stablo {
 
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
-                    min=Math.max(min,dete.get(i).racunajMD());
+                    min=Math.min(min,dete.get(i).racunajMD());
             }
-            return min;
+            broj = min;
         }
         else if (operacija.equals("I")){
             double max=-2.0;
@@ -94,11 +99,14 @@ public class Stablo {
                 for (int i =0;i<dete.size();i++)
                     max=Math.max(max,dete.get(i).racunajMD());
             }
-            return max;
+            broj = max;
         }
+        /*
         else {
             return operandi.getFirst().getMD();
         }
+        */
+        return broj;
 
     }
 

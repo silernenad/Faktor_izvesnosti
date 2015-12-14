@@ -48,9 +48,11 @@ public class Ostalo extends AppCompatActivity {
         boolean nasao=false;
         Pravilo tekPravilo;
         for(int i=0;i<listaPravila.size();i++){                 //obilazi sva pravila
+
             tekPravilo=listaPravila.get(i);
             String tekPred;
             for (int j=0;j<tekPravilo.preduslov.size();j++){    //obailazi sve preduslove
+                nasao=false;
                 tekPred=tekPravilo.preduslov.get(j).getNaziv();
 
                 Zakljucak zzz;
