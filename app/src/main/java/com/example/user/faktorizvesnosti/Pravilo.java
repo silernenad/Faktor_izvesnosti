@@ -129,7 +129,7 @@ public class Pravilo implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         StringTokenizer ts=new StringTokenizer(izraz);
 
-        stringBuilder.append("P" + redniBr + ":\n" + "AKO \n");
+        stringBuilder.append("\nP" + redniBr + ":\n" + "AKO \n");
         while (ts.hasMoreTokens())stringBuilder.append(ts.nextToken()+"\n");
         stringBuilder.append( "ONDA (" + broj + ") \n" );
         stringBuilder.append(getZakljucak());

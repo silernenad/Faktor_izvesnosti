@@ -7,7 +7,7 @@ public class ElemPreduslov {
     private double MD = 0;
     boolean negacija=false;
 
- //   public ElemPreduslov sled = null;
+
 
 
     public ElemPreduslov(){}
@@ -22,5 +22,9 @@ public class ElemPreduslov {
     public void setMB(double MB) {this.MB = MB;}
     public void setMD(double MD) {this.MD = MD;}
     public void setNegacija(boolean a){this.negacija=a;}
+
+    public String toString(){
+        return naziv;
+    }
 
 }

@@ -47,7 +47,9 @@
         android:id="@+id/resenjeOutput"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp" />
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        />
 
 
     </LinearLayout>

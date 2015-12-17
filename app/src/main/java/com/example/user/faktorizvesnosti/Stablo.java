@@ -23,40 +23,50 @@ public class Stablo {
         this.num=a;
     }
 
-    public double racunajMB(){
+    public double racunajMB(StringBuilder b){
         double broj=0;
         if (operacija.equals("ILI")){
+            b.append("max(");
             double max=-2.0;
             if (operandi.size()!=0)
                 for (int i = 0;i<operandi.size();i++) {
                     if (operandi.get(i).getNegacija()){
                         max = Math.max(operandi.get(i).getMD(), max);
+                        b.append(" -" +operandi.get(i).getMB()+",");
                     }
-                    else
+                    else {
                         max = Math.max(operandi.get(i).getMB(), max);
+                        b.append(" " +operandi.get(i).getMB()+",");
+                    }
                 }
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
-                    max=Math.max(max,dete.get(i).racunajMB());
+                    max=Math.max(max,dete.get(i).racunajMB(b));
             }
             broj= max;
+            b.append(")");
         }
         else if (operacija.equals("I")){
+            b.append("min(");
             double min = 2.0;
             if (operandi.size()!=0)
                 for (int i = 0;i<operandi.size();i++) {
                     if (operandi.get(i).getNegacija()){
                         min = Math.min(operandi.get(i).getMD(), min);
+                        b.append(" -" +operandi.get(i).getMB()+",");
                     }
-                    else
+                    else {
                         min = Math.min(operandi.get(i).getMB(), min);
+                        b.append(" " +operandi.get(i).getMB()+",");
+                    }
                 }
             if (dete.size()!=0){                                                                    //zasto je ovde usao?????
                 for (int i =0;i<dete.size();i++)
-                    min=Math.min(min,dete.get(i).racunajMB());
+                    min=Math.min(min,dete.get(i).racunajMB(b));
             }
             broj= min;
         }
+        b.append(")");
         return broj;
         /*
         else {          //sluvaj kada se preduslov pravila sastoji iz samo jednog elementa
@@ -66,41 +76,56 @@ public class Stablo {
     }
 
 
-    public double racunajMD(){      //npr MD(eP1)
+    public double racunajMD(StringBuilder b){      //npr MD(eP1)
         double broj = 0;
         if (operacija.equals("ILI")){
+            b.append("min(");
             double min = 2.0;
             if (operandi.size()!=0){
                 for (int i = 0;i<operandi.size();i++){
-                    if (operandi.get(i).getNegacija())
-                        min=Math.min(operandi.get(i).getMB(), min);
-
-                    else
-                        min=Math.min(operandi.get(i).getMD(), min);
+                    if (operandi.get(i).getNegacija()) {
+                        min = Math.min(operandi.get(i).getMB(), min);
+                        b.append(" -" +operandi.get(i).getMB()+",");
+                    }
+                    else {
+                        min = Math.min(operandi.get(i).getMD(), min);
+                        b.append(" "+operandi.get(i).getMB()+",");
+                    }
                 }
             }
 
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
-                    min=Math.min(min,dete.get(i).racunajMD());
+                    min=Math.min(min,dete.get(i).racunajMD(b));
             }
             broj = min;
+
+            //probaj ovo za izbacivanj zadnjeg chara tj da be bi ispisivao zarez na poslednem
+            //b.deleteCharAt(b.length()-1) ili
+            //b.setLength(b.length() - 1);
+            b.append(")");
         }
         else if (operacija.equals("I")){
+            b.append("max(");
             double max=-2.0;
             if (operandi.size()!=0)
                 for (int i = 0;i<operandi.size();i++) {
-                    if (operandi.get(i).getNegacija())
+                    if (operandi.get(i).getNegacija()) {
                         max = Math.max(operandi.get(i).getMB(), max);
-                    else
+                        b.append(" -" + operandi.get(i).getMB() + ",");
+                    }
+                    else {
                         max = Math.max(operandi.get(i).getMD(), max);
+                        b.append(" " + operandi.get(i).getMB() + ",");
+                    }
                 }
             if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
-                    max=Math.max(max,dete.get(i).racunajMD());
+                    max=Math.max(max,dete.get(i).racunajMD(b));
             }
             broj = max;
         }
+        b.append(")");
         /*
         else {
             return operandi.getFirst().getMD();

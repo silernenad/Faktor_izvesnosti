@@ -67,6 +67,14 @@ public class Zakljucak implements Serializable{
         StringTokenizer token =new StringTokenizer(pravila);
         for (int i=0;i<brPravila;i++){                     //koliko pravila vode do istog zakljucka
             int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
+
+            Resenje.poruka.append("MB'(z"+this.redniBr+",eP"+tek+") \n i \n"
+                    +"MD'(z"+this.redniBr+",eP"+tek+")"+
+                    "su zadati u postavci zadatka\n");
+            Resenje.poruka.append("Da bi smo izracunali MB(ep"+tek+") \n i \n " +
+                    "MD(ep"+tek+") \n moramo odrediti meru poverenja i meru nepoverenja " +
+                    "svih elemenata pretpostavke.\n");
+
             Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
             //prolazi se kroz preduslove tekuceg pravila da se vidi da li su inicijalizovani
             for (int j = 0;j<tekPravilo.preduslov.size();j++){
@@ -74,14 +82,31 @@ public class Zakljucak implements Serializable{
                 ElemPreduslov tekElem=tekPravilo.preduslov.nadji(tekString);
                 if (0==tekElem.getMB() && 0== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
                     Zakljucak tekZakljucak = listaZakljucaka.nadji(tekElem.getNaziv());
-                    tekZakljucak.izracunaj(listaPravila,listaZakljucaka);
+                    Resenje.poruka.append("Elemenat:\n"
+                            +tekZakljucak.getNaziv()+"\n" +
+                            "pretpostavke pravila P" +tekPravilo.getRedniBr() +"\n" +
+                            "je zakljucak nekog drugog\n" +
+                            "pravila pa njegov faktor izvesnosti \n" +
+                            "moramo da izracunamo.\n");
+                    tekZakljucak.izracunaj(listaPravila, listaZakljucaka);
                     //izracunao je zakljucka koji je u stvati preduslov
                     //sad treba upisati te vrednosti u tekElem
 
-                    //vidi da li radi...
 
                     tekElem.setMB(tekZakljucak.getMB());
                     tekElem.setMD(tekZakljucak.getMD());
+
+                    //// TODO: 12/16/2015 dodaj tekst ovde za slucaj kada treba da se izracunaju pretpostavke
+
+                }
+                else {
+
+                    Resenje.poruka.append("Element: \n"+tekString +"\n pretpostavke pravila P"+
+                        tekPravilo.getRedniBr()+ "je opazanje ciji je faktor izvesnosti zadat u " +
+                            "postavci i ne moramo ga racunati.");
+                    Resenje.poruka.append("\nMera poverenja u njega je:\n MB("+
+                        tekString+")="+ tekElem.getMB()+"\n a mera nepoverenja u njega je: MD("+
+                        tekString +")=" + tekElem.getMD()+"\n");
                 }
 
                 /*
@@ -105,26 +130,63 @@ public class Zakljucak implements Serializable{
                 tekPravilo.setMD(broj3);
 */
             }
+            Resenje.poruka.append("Posto smo odredili meru poverenje i meru nepoverenja" +
+                    " svih elemenata pretpostavke pravila P" + tekPravilo.getRedniBr() +
+                    " posebno, mozemo izracunati meru poverenja: \n MB(eP" + tekPravilo.getRedniBr() +
+                    ")\n i meru nepoverenja \n MD(eP" + tekPravilo.getRedniBr()+") \npretpostavke " +
+                    "pravila P"+ tekPravilo.getRedniBr()+ ".");
+
+
+            //// TODO: 12/16/2015 vidi da pre ovog izracunavanje ubacis da stampa i izraz i ubaci prvo - i pazi da ne sjebe stablo
 
             //sada su svi preduslovi definisani tj nisu zakljucci
             //sad treba izracunati MB(eP1) i MD(eP1)
             //racunamo preko stabla
-
-            double broj=tekPravilo.getKoren().racunajMB();
+            StringBuilder stringBuilder=new StringBuilder();
+            double broj=tekPravilo.getKoren().racunajMB(stringBuilder);
+            Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
+                            ") = "+stringBuilder + " = " + broj + "\n");
             tekPravilo.setMB_P(broj);
-            double broj1=tekPravilo.getKoren().racunajMD();
-            tekPravilo.setMD_P(broj1);
 
+            stringBuilder = new StringBuilder();
+            double broj1=tekPravilo.getKoren().racunajMD(stringBuilder);
+            Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
+                            ") = "+stringBuilder + " = " + broj1 + "\n");
+            tekPravilo.setMD_P(broj1);
 
             //MB(z1,eP1) i MD(z1,eP1)
 
+            Resenje.poruka.append("Mera poverenja i nepoverenja zakljucka: \n" + getNaziv()+
+                    "\n na osnovu pravila P"+tekPravilo.getRedniBr()+" se sada mogu izracunati" +
+                    " na osnovu formula:\n MB(z"+getRedniBroj()+",eP"+tekPravilo.getRedniBr()+
+                    ") = MB'(z"+getRedniBroj()+",eP"+tekPravilo.getRedniBr()+") * MB(eP"+
+                    tekPravilo.getRedniBr()+") \ni \n " +
+
+                    " MD(z"+getRedniBroj()+",eP"+tekPravilo.getRedniBr()+
+                    ") = MD'(z"+getRedniBroj()+",eP"+tekPravilo.getRedniBr()+") * MD(eP"+
+                    tekPravilo.getRedniBr()+")");
+
+            Resenje.poruka.append("\nGde su:MB'(z" + getRedniBroj() + ",eP" + tekPravilo.getRedniBr() + ") - "
+                    + "mera poverenja zakljucka z" + getRedniBroj() + " na osnovu pravila P" +
+                    tekPravilo.getRedniBr() + "\nMD'(z" + getRedniBroj() + ",eP" + tekPravilo.getRedniBr() +
+                    ")- " + "mera nepoverenja zakljucka z" + getRedniBroj() + " na osnovu pravila P" +
+                    tekPravilo.getRedniBr() + "\n u slucaju potpune izvesnosti pravila P" +
+                    tekPravilo.getRedniBr() + "\n");
+
             double broj2=tekPravilo.getMB_() * tekPravilo.getMB_P();
             tekPravilo.setMB(broj2);
+
+            Resenje.poruka.append("MB(z" + getRedniBroj() + ",eP" + tekPravilo.getRedniBr() +
+                    ") = " + tekPravilo.getMB_P() + " * " + tekPravilo.getMB_() + " = " + broj2
+                    + "\n");
 
             double broj3=tekPravilo.getMB_P()-tekPravilo.getMD_P();
             broj3=tekPravilo.getMD_() * Math.max(0,broj3);
             tekPravilo.setMD(broj3);
 
+            Resenje.poruka.append("MD(z" + getRedniBroj() + ",eP" + tekPravilo.getRedniBr() +
+                    ") = " + tekPravilo.getMD_P() + " * " + tekPravilo.getMD_() + " = " + broj3
+                    + "\n");
         }
 
         //ovde se racuna MB i MB za zakljucak
@@ -132,15 +194,6 @@ public class Zakljucak implements Serializable{
         token =new StringTokenizer(pravila);
 
         //zakljucak.MB predstavlja MB(z1,eP1) tj pravilo.MB
-
-
-
-
-
-
-
-
-
 
 
 
@@ -167,15 +220,21 @@ public class Zakljucak implements Serializable{
 */
 
 
-
+        Resenje.poruka.append("Sada na osnovu pocetne formule racunamo faktor izvenosti zakljucka:\n" +
+                "z = " + getNaziv()+"\n na onovu pravila ");
 
         if (brPravila==1){
             int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
             Pravilo tekPravilo=listaPravila.get(tek-1);     //dohvata to pravilo
+
+            Resenje.poruka.append(tekPravilo.toSting() + "\n\n");
+
             double broj1=tekPravilo.getMB();
             setMB(broj1);
             double broj2=tekPravilo.getMD();
             setMD(broj2);
+            Resenje.poruka.append("CF(z" + getRedniBroj() +") = MB(z"+ getRedniBroj()+
+            ",eP"+tek+") - MD(z" + getRedniBroj()+",eP" + tek+") = " );
         }
         else{
             int tek=Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
@@ -183,17 +242,59 @@ public class Zakljucak implements Serializable{
             double a1=tekPravilo.getMB();
             double a2=tekPravilo.getMD();
 
-            tek = Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
-            tekPravilo = listaPravila.get(tek - 1);     //dohvata to pravilo
+            int tek1 = Integer.parseInt(token.nextToken());    //vraca br pravila koje vodi do zakljucka
+            tekPravilo = listaPravila.get(tek1 - 1);     //dohvata to pravilo
             double a3 =  a1 + tekPravilo.getMB() - a1 * tekPravilo.getMB();
             double a4 = a2 + tekPravilo.getMD() - a2 * tekPravilo.getMD();
             setMB(a3);
             setMD(a4);
+            Resenje.poruka.append("\n Do zakljucka: \n z" + getRedniBroj() + " = " + getNaziv() + "\n" +
+                    "vode " + getBrPravila() + " pravila\n zbog toga moramo izracunati zbirne meru poverenja " +
+                    "i nepoverenja zakljucka:\n z" + getRedniBroj() + "\n pomocu formula: \n \n " +
+                    "Zbirnu meru poverenja \n MBcum(z");
+            Resenje.poruka.append("Zbirna mera poverenja\n" +
+                    "MBcum(z, e1,2)= 0 ako je MDcum(z, e1,2)= 1\n" +
+                    "MBcum(z, e1,2)= \n" +
+                    "   MB(z,e1) + MB(z,e2) - MB(z,e1) * MB(z,e2)\n" +
+                    "\n" +
+                    "Zbirna mera nepoverenja\n" +
+                    "MDcum(z, e1,2)= 0 ako je MBcum(z, e1,2)= 1\n" +
+                    "MDcum(z, e1,2)= \n" +
+                    "   MD(z,e1) + MD(z,e2) - MD(z,e1) * MD(z,e2)\n" +
+                    "\n" +
+                    "a zatim i zbirni faktor izvesnosti\n" +
+                    "na osnovu formule:\n" +
+                    "CF(z, e1,2)= MBcum(z, e1,2) - MDcum(z, e1,2)\n" +
+                    "\n" +
+                    "Gde su e1 i e2 dve nezavisne pretpostavke\n\n");
+
+            Resenje.poruka.append("Zbirna mera poverenja \nMBcum(z"+getRedniBroj()+",eP"+tek+
+                    "ep"+tek1+") = " +
+                            "MB(z"+getRedniBroj()+",eP"+tek+") + " +
+                            "MB(z"+getRedniBroj()+",eP"+tek1+") - " +
+                            "MB(z"+getRedniBroj()+",eP"+tek+") * " +
+                            "MB(z"+getRedniBroj()+",eP"+tek1+") = "+
+                            a1 +" + "+ tekPravilo.getMB()+" - "+  a1 +" * "+
+                            tekPravilo.getMB()+" = "+ a3);
+
+            Resenje.poruka.append("Zbirna mera nepoverenja \nMBcum(z"+getRedniBroj()+",eP"+tek+
+                    "ep"+tek1+") = " +
+                    "MD(z"+getRedniBroj()+",eP"+tek+") + " +
+                    "MD(z"+getRedniBroj()+",eP"+tek1+") - " +
+                    "MD(z"+getRedniBroj()+",eP"+tek+") * " +
+                    "MD(z"+getRedniBroj()+",eP"+tek1+") = "+
+                    a2 +" + "+ tekPravilo.getMD()+" - "+  a2 +" * "+
+                    tekPravilo.getMD()+" = "+ a4);
+
+            Resenje.poruka.append("CF(z" + getRedniBroj() +") = " +
+                    "MBcum(z" + getRedniBroj() + ",eP" + tek +"eP"+tek1+") -"+
+                    "MDcum(z" + getRedniBroj() + ",eP" + tek +"eP"+tek1+") = "+
+                    a3+" - "+ a4+ " = " );
 
         }
         double cf= getMB()-getMD();
         setFaktorI(cf);
-
+        Resenje.poruka.append(cf);
 
         }
 

@@ -122,7 +122,7 @@ public class Resenje extends AppCompatActivity {
 
 
         poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj()+
-                "="+glavni+" pomocu formule:\n");
+                "="+glavni+"\n pomocu formule:\n");
 
         if (glavni.getBrPravila()==1){
             /*
@@ -139,7 +139,6 @@ public class Resenje extends AppCompatActivity {
                             "MB(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+") - "+
                             "MD(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+")  "
             );
-
         }
         else {
              ts = new StringTokenizer(glavni.getPravila() );
@@ -152,8 +151,6 @@ public class Resenje extends AppCompatActivity {
             }
              poruka.append("MBcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+") - "+
                      "MDcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+")");
-
-
         }
 
 
@@ -166,7 +163,7 @@ public class Resenje extends AppCompatActivity {
             int brojP=Integer.parseInt(ts.nextToken());
             int brojZ=glavni.getRedniBroj();
 
-            poruka.append(listaPravila.get(brojP - 1).toSting()+"\n\n")  ;//proveri ovde ne stampa prailo...
+            poruka.append(listaPravila.get(brojP - 1).toSting()+"\n\n")  ;
 
             poruka.append("Gde su:\n" +
                     "MB(z"+brojZ+",eP"+brojP+")- mera poverenje zakljucka z"+brojZ+
@@ -193,14 +190,12 @@ public class Resenje extends AppCompatActivity {
                     "\n" +
                     "CF(eP"+brojP+")-faktor izvesnosi pretpostavke \n" +
                     "pravila P"+brojP+"") ;
-            poruka.append("\ni pravila ");
-
+            if (i+1<glavni.getBrPravila())
+                poruka.append("\ni pravila \n ");
         }
 
         //izracunavanje
-        glavni.izracunaj(listaPravila,listaZakljucaka);
-
-        poruka.append("\n " + glavni.getFaktorI());
+        glavni.izracunaj(listaPravila, listaZakljucaka);
         resenjeText.setText(poruka);
 
     }
