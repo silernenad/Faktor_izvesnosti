@@ -1,5 +1,7 @@
 package com.example.user.faktorizvesnosti;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,13 +32,6 @@ public class Resenje extends AppCompatActivity {
         final TextView resenjeText = (TextView) findViewById(R.id.resenjeOutput);
 
 
-        ////////////////////////////////////////////////////////////////////////
-
-
-/*      String url = "http://howtodoinjava.com/java-initerview-questions";  ako nesto nije u redu moze i ovako da se deli
-        StringTokenizer multiTokenizer = new StringTokenizer(url, "://.-");
-        probaj sa ovim (sting, "\t\n\r ")
- */
         /***    UNOS PRAVILA    ***/
 
 
@@ -64,41 +59,45 @@ public class Resenje extends AppCompatActivity {
             listaZakljucaka.get(i).setRedniBroj(i + 1);
         }
 
+        try {
 
 
+            //TOKENIZACIJA OPAZANJA
+            opazanjaMessage = opazanjaMessage.replace("(", "");
+            opazanjaMessage = opazanjaMessage.replace(")", "");
+            StringTokenizer opazanja = new StringTokenizer(opazanjaMessage);
 
-        //TOKENIZACIJA OPAZANJA
-        opazanjaMessage=opazanjaMessage.replace("(", "");
-        opazanjaMessage=opazanjaMessage.replace(")", "");
-        StringTokenizer opazanja = new StringTokenizer(opazanjaMessage );
+            boolean nasao = false;
 
-        boolean nasao=false;
+            while (opazanja.hasMoreTokens()) {
 
-        while (opazanja.hasMoreTokens()) {
+                String s = opazanja.nextToken();
+                Pravilo tekPravilo;
+                //nasao=false;
+                String a = opazanja.nextToken();
+                double broj = Double.parseDouble(a);
 
-            String s=opazanja.nextToken();
-            Pravilo tekPravilo;
-            //nasao=false;
-            String a = opazanja.nextToken();
-            double broj = Double.parseDouble(a);
+                for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
+                    tekPravilo = listaPravila.get(i);
+                    String tekPred;
+                    for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
+                        tekPred = tekPravilo.preduslov.get(j).getNaziv();
+                        if (tekPred.equals(s)) {                                      //ovo je nesto sumnjivo
+                            if (broj >= 0) tekPravilo.preduslov.get(j).setMB(broj);
+                            else tekPravilo.preduslov.get(j).setMD(broj);
+                            break;
+                        }
 
-            for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
-                tekPravilo = listaPravila.get(i);
-                String tekPred;
-                for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
-                    tekPred = tekPravilo.preduslov.get(j).getNaziv();
-                    if (tekPred.equals(s)){                                      //ovo je nesto sumnjivo
-                        if (broj>=0)tekPravilo.preduslov.get(j).setMB(broj);
-                        else tekPravilo.preduslov.get(j).setMD(broj);
-                        break;
                     }
 
                 }
-              /*  if (nasao)
-                    break;
-                    */
             }
+        }catch (Exception e){
+            String string = "Nisu uneti svi parametri!!!";
+            ispis(this.findViewById(android.R.id.content), string);
+
         }
+
 
         //pravljenje stabla
         for (int i=0;i<listaPravila.size();i++){
@@ -118,6 +117,10 @@ public class Resenje extends AppCompatActivity {
             break;
         }
 */
+        if (zakljucakMessage.equals(null)||listaZakljucaka.nadji(zakljucakMessage)==null){
+            ispis(this.findViewById(android.R.id.content),
+                    "Zakljucak nije unet ili ne postoji pod tim nazivom");
+        }
         Zakljucak glavni=listaZakljucaka.nadji(zakljucakMessage);
 
 
@@ -197,6 +200,13 @@ public class Resenje extends AppCompatActivity {
         //izracunavanje
         glavni.izracunaj(listaPravila, listaZakljucaka);
         resenjeText.setText(poruka);
+
+
+
+        /********       ovako se poruka ispisuje u obaku na ekranu   *****/
+
+//       String food = "tekst greske";
+//        Toast.makeText(MainActivity.this, food, Toast.LENGTH_LONG).show();
 
     }
 
@@ -306,6 +316,28 @@ public class Resenje extends AppCompatActivity {
 
         }
 
+    }
+    public void ispis(View view){
+        AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);
+        upozorenje.setMessage("Greska u gramatici!\nProverite pravilo broj " + id).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+                .setTitle("Upozorenje!").create();
+        upozorenje.show();
+    }
+    public void ispis(View view, String s){
+        AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);
+        upozorenje.setMessage(s).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+                .setTitle("Upozorenje!").create();
+        upozorenje.show();
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.*;
 
 public class UnosPravila extends AppCompatActivity {
 
-
+    static int id=1;
 
 
     @Override
@@ -21,7 +21,6 @@ public class UnosPravila extends AppCompatActivity {
     }
 
     public void onClickPravila(View view){
-
         Intent i = new Intent(this,Ostalo.class);
         final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
         String pravilaMessage = pravilaInput.getText().toString();                  //ulazni Sting

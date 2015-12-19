@@ -1,5 +1,7 @@
 package com.example.user.faktorizvesnosti;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,8 +34,12 @@ public class Ostalo extends AppCompatActivity {
         while (ts.hasMoreTokens()){
             Pravilo novoPravilo = new Pravilo();
             //pravilo koje ce se ubacivati u listu
-            traziPreduslov(ts, novoPravilo, listaZakljucaka); //trazi jedno pravilo sa ulaza
-
+            try {
+                traziPreduslov(ts, novoPravilo, listaZakljucaka); //trazi jedno pravilo sa ulaza
+            }catch (Exception e){
+                ispis(this.findViewById(android.R.id.content),
+                        "Greska u gramatici!!!");
+            }
             novoPravilo.setujRedniBroj(id++);
 
             listaPravila.addLast(novoPravilo);
@@ -110,7 +116,9 @@ public class Ostalo extends AppCompatActivity {
     }
 
 
-    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo, ListaZakljucaka2 listaZakljucaka){
+    public void traziPreduslov(StringTokenizer ts, Pravilo pravilo, ListaZakljucaka2 listaZakljucaka)
+    throws Exception{
+        boolean greska=false;
         pravilo.reset();
         while (!ts.nextToken().equals("AKO")  ){
             if(!ts.hasMoreTokens())break;// return;
@@ -119,28 +127,40 @@ public class Ostalo extends AppCompatActivity {
 
 
         //   if(!ts.hasMoreTokens()) return;
-
+        String tekuci="", prethodni="";
         String s = ts.nextToken();
         while (!s.equals("ONDA") && ts.hasMoreTokens()) {
-
-
+       prethodni=tekuci;
+            tekuci=s;
+            greska=false;
             switch (s) {
+
                 case "ILI":
                     pravilo.dodajIzraz(s +" ");
+                    if (jeZnak(prethodni)&&!prethodni.equals(")"))
+                        greska=true;
                     break;
                 case "I":
                     pravilo.dodajIzraz(s +" ");
+                    if (jeZnak(prethodni)&&!prethodni.equals(")"))
+                        greska=true;
                     break;
                 case "(":
                     pravilo.dodajIzraz(s +" ");
+                    if (jeZnak(prethodni))
+                        greska=true;
                     break;
                 case ")":
                     pravilo.dodajIzraz(s +" ");
+                    if (jeZnak(prethodni))
+                        greska=true;
                     break;
                 case "-":
                     s=ts.nextToken();
                     pravilo.dodajPreduslov(s);
                     pravilo.dodajIzraz(s +" ");
+                    if (jeZnak(prethodni))
+                        greska=true;
                     break;
 
                 default:
@@ -148,19 +168,42 @@ public class Ostalo extends AppCompatActivity {
                     pravilo.dodajIzraz(s +" ");
                     break;
             }//switch end
-            s=ts.nextToken();
-            if(s.equals("ONDA"))                                    //dodao.......
+            if (greska) {
+                ispis(this.findViewById(android.R.id.content));
+
+            }
+            s= ts.nextToken();
+            if(s.equals("ONDA")) {                                    //dodao.......
+                prethodni="ONDA";
                 break;
+            }
         }
+        if (!prethodni.equals("ONDA"))
+            ispis(this.findViewById(android.R.id.content));
+
+
         if (ts.hasMoreTokens()) {
+
             String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade
 
             mb = mb.replace("(", "");
             mb = mb.replace(")", "");
+            double broj=0.0;
 
-            double broj = Double.parseDouble(mb);//pretvara se u broj i setuje se MD' ili MD'
+            broj = Double.parseDouble(mb);
+            if (broj<0||broj>1) {
+                String string="Mera poverenja zakljucka broj "+id+"\nmora biti u okviru od 0 do 1";
+                ispis(this.findViewById(android.R.id.content), string);
+            }
+
+
+
+
             if (broj > 0) pravilo.setMB_(broj);
             else pravilo.setMD_(broj);
+            if (!ts.hasMoreTokens()){
+                ispis(this.findViewById(android.R.id.content));
+            }
             Zakljucak z = new Zakljucak(ts.nextToken());
             pravilo.setZakljucak(z);   //dodaje se zakljucak   Proveri!!!
 
@@ -195,6 +238,31 @@ public class Ostalo extends AppCompatActivity {
         }
 
     }
-
+    public boolean jeZnak(String string){
+        return    string.equals("ILI")||string.equals("AKO")||string.equals("(")||string.equals(")")||
+                string.equals("I")||string.equals("-");
+    }
+    public void ispis(View view){
+        AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);
+        upozorenje.setMessage("Greska u gramatici!\nProverite pravilo broj " + id).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+                .setTitle("Upozorenje!").create();
+        upozorenje.show();
+    }
+    public void ispis(View view, String s){
+        AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);
+        upozorenje.setMessage(s).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        })
+                .setTitle("Upozorenje!").create();
+        upozorenje.show();
+    }
 
 }
