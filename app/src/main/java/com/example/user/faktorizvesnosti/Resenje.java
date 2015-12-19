@@ -20,6 +20,17 @@ public class Resenje extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resenje);
 
+    }
+//vidi da li radi
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+
+        poruka= new StringBuilder();
+        id=1;
+        idZak=1;
         Bundle data = getIntent().getExtras();
         if (null==data) {
             return;
@@ -73,9 +84,30 @@ public class Resenje extends AppCompatActivity {
 
                 String s = opazanja.nextToken();
                 Pravilo tekPravilo;
-                //nasao=false;
-                String a = opazanja.nextToken();
-                double broj = Double.parseDouble(a);
+                String a=null;
+                double broj=0;
+                if (opazanja.hasMoreTokens()){
+                    a = opazanja.nextToken();
+                    char sss= a.charAt(0);
+                    if (!('0' > sss || sss <= '9')){
+                        ispis(this.findViewById(android.R.id.content),"Uneta vrednost nije broj!");
+                    }
+                    broj = Double.parseDouble(a);
+                    if (broj<0||broj>1)
+                        ispis(this.findViewById(android.R.id.content),"Uneta vrednost nije u opsegu" +
+                                " 0 - 1");
+
+                }
+                else{
+                    ispis(this.findViewById(android.R.id.content), "Nisu uneti svi parametri!!!");
+                }
+
+                /*
+                if ('0' <= sss && sss <= '9'){
+                    ispis(this.findViewById(android.R.id.content),"Uneta vrednost nije broj!");
+                }
+                */
+
 
                 for (int i = 0; i < listaPravila.size(); i++) {                 //obilazi sva pravila
                     tekPravilo = listaPravila.get(i);
@@ -120,14 +152,16 @@ public class Resenje extends AppCompatActivity {
         if (zakljucakMessage.equals(null)||listaZakljucaka.nadji(zakljucakMessage)==null){
             ispis(this.findViewById(android.R.id.content),
                     "Zakljucak nije unet ili ne postoji pod tim nazivom");
+
         }
-        Zakljucak glavni=listaZakljucaka.nadji(zakljucakMessage);
+        else {
+            Zakljucak glavni = listaZakljucaka.nadji(zakljucakMessage);
 
 
-        poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj()+
-                "="+glavni+"\n pomocu formule:\n");
+            poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj() +
+                    "=" + glavni + "\n pomocu formule:\n");
 
-        if (glavni.getBrPravila()==1){
+            if (glavni.getBrPravila() == 1) {
             /*
             String pravila=glavni.getPravila();
             StringTokenizer a = new StringTokenizer(pravila);
@@ -138,86 +172,83 @@ public class Resenje extends AppCompatActivity {
                  "MD(z"+ glavni.getRedniBroj()+",eP"+tek+")  "
             );
             */
-            poruka.append("CF(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+")="+
-                            "MB(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+") - "+
-                            "MD(z"+ glavni.getRedniBroj()+",eP"+glavni.getPravila()+")  "
-            );
-        }
-        else {
-             ts = new StringTokenizer(glavni.getPravila() );
+                poruka.append("CF(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ")=" +
+                                "MB(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ") - " +
+                                "MD(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ")  "
+                );
+            } else {
+                ts = new StringTokenizer(glavni.getPravila());
 
 
-            poruka.append("CF(z"+ glavni.getRedniBroj()+")=");
-            StringBuilder stringBuilder=new StringBuilder();
-            while (ts.hasMoreTokens()){
-                stringBuilder.append("P"+ts.nextToken());
+                poruka.append("CF(z" + glavni.getRedniBroj() + ")=");
+                StringBuilder stringBuilder = new StringBuilder();
+                while (ts.hasMoreTokens()) {
+                    stringBuilder.append("P" + ts.nextToken());
+                }
+                poruka.append("MBcum(z" + glavni.getRedniBroj() + ",e" + stringBuilder + ") - " +
+                        "MDcum(z" + glavni.getRedniBroj() + ",e" + stringBuilder + ")");
             }
-             poruka.append("MBcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+") - "+
-                     "MDcum(z"+ glavni.getRedniBroj()+",e"+stringBuilder+")");
+
+
+            poruka.append("\n na onovu pravila ");
+
+            for (int i = 0; i < glavni.getBrPravila(); i++) {
+                //           StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
+                String tek = glavni.getPravila();
+                ts = new StringTokenizer(tek);
+                int brojP = Integer.parseInt(ts.nextToken());
+                int brojZ = glavni.getRedniBroj();
+
+                poruka.append(listaPravila.get(brojP - 1).toSting() + "\n\n");
+
+                poruka.append("Gde su:\n" +
+                        "MB(z" + brojZ + ",eP" + brojP + ")- mera poverenje zakljucka z" + brojZ +
+                        " na osnovu pravila P" + brojP + "\n" +
+                        "MD(z" + brojZ + ",eP" + brojP + ")- mera nepoverenja zakljucka z" + brojZ +
+                        " na osnovu pravila P" + brojP +
+                        "\nMeru poverenja:\n" +
+                        "MB(z" + brojZ + ",eP" + brojP + ")\n" +
+                        "i mera nepoverenja:\n" +
+                        "MD(z" + brojZ + ",eP" + brojP + ")\n" +
+                        "zakljucka z" + brojZ + " na osnovu pravila P" + brojP + "\n" +
+                        "racunaju se pomocu formule:\n\n");
+
+                poruka.append("MB(z" + brojZ + ",eP" + brojP + ") = MB'(z" + brojZ + ",eP" + brojP + ")* max(0,CF(eP" + brojP + "))\n" +
+                        "MD(z" + brojZ + ",eP" + brojP + ") = MD'(z" + brojZ + ",eP" + brojP + ")* max(0,CF(eP" + brojP + "))\n" +
+                        "\n" +
+                        "Gde su:\n" +
+                        "MB'( z" + brojZ + ",eP" + brojP + ")-mera poverenje zakljucka\n" +
+                        " z" + brojZ + " na osnovu pravila P" + brojP + "\n" +
+                        "MD'( z" + brojZ + ",eP" + brojP + ")-mera nepoverenja zakljucka\n" +
+                        " z" + brojZ + " na osnovu pravila P" + brojP + "\n" +
+                        "u slucaju potpune izvesnosti pretpostavke\n" +
+                        "pravila P" + brojP + "\n" +
+                        "\n" +
+                        "CF(eP" + brojP + ")-faktor izvesnosi pretpostavke \n" +
+                        "pravila P" + brojP + "");
+                if (i + 1 < glavni.getBrPravila())
+                    poruka.append("\ni pravila \n ");
+            }
+
+            //izracunavanje
+            try {
+                glavni.izracunaj(listaPravila, listaZakljucaka);
+            } catch (Exception e) {
+                ispis(this.findViewById(android.R.id.content),
+                        "Greska!\nProverite unete podatke!");
+            }
+            resenjeText.setText(poruka);
+
+
+            //// TODO: 12/19/2015 porobaj da napises onStart metodu ili medobu za dugme BACK
+
+
+        /*
+        onStart se poziva posle onCreate i
+        kad activity posatne envidljiv pa se vrati u njega
+         */
         }
-
-
-        poruka.append("\n na onovu pravila ") ;
-
-        for (int i =0;i<glavni.getBrPravila();i++){
- //           StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
-            String tek=glavni.getPravila();
-            ts=new StringTokenizer(tek);
-            int brojP=Integer.parseInt(ts.nextToken());
-            int brojZ=glavni.getRedniBroj();
-
-            poruka.append(listaPravila.get(brojP - 1).toSting()+"\n\n")  ;
-
-            poruka.append("Gde su:\n" +
-                    "MB(z"+brojZ+",eP"+brojP+")- mera poverenje zakljucka z"+brojZ+
-                    " na osnovu pravila P"+brojP+"\n" +
-                    "MD(z"+brojZ+",eP"+brojP+")- mera nepoverenja zakljucka z"+brojZ+
-                    " na osnovu pravila P"+brojP +
-                    "\nMeru poverenja:\n" +
-                    "MB(z"+brojZ+",eP"+brojP+")\n" +
-                    "i mera nepoverenja:\n" +
-                    "MD(z"+brojZ+",eP"+brojP+")\n" +
-                    "zakljucka z"+ brojZ +" na osnovu pravila P"+brojP+"\n" +
-                    "racunaju se pomocu formule:\n\n") ;
-
-            poruka.append("MB(z"+brojZ+",eP"+brojP+") = MB'(z"+brojZ+",eP"+brojP+")* max(0,CF(eP"+brojP+"))\n" +
-                    "MD(z"+brojZ+",eP"+brojP+") = MD'(z" +brojZ+",eP"+brojP+")* max(0,CF(eP"+brojP+"))\n" +
-                    "\n" +
-                    "Gde su:\n" +
-                    "MB'( z"+brojZ+",eP"+brojP+")-mera poverenje zakljucka\n" +
-                    " z"+brojZ+" na osnovu pravila P"+brojP+"\n" +
-                    "MD'( z"+brojZ+",eP"+brojP+")-mera nepoverenja zakljucka\n" +
-                    " z"+brojZ+" na osnovu pravila P"+brojP+"\n" +
-                    "u slucaju potpune izvesnosti pretpostavke\n" +
-                    "pravila P"+brojP+"\n" +
-                    "\n" +
-                    "CF(eP"+brojP+")-faktor izvesnosi pretpostavke \n" +
-                    "pravila P"+brojP+"") ;
-            if (i+1<glavni.getBrPravila())
-                poruka.append("\ni pravila \n ");
-        }
-
-        //izracunavanje
-        glavni.izracunaj(listaPravila, listaZakljucaka);
-        resenjeText.setText(poruka);
-
-
-
-        /********       ovako se poruka ispisuje u obaku na ekranu   *****/
-
-//       String food = "tekst greske";
-//        Toast.makeText(MainActivity.this, food, Toast.LENGTH_LONG).show();
-
     }
-
-
-
-
-
-
-
-
-
 
 
     public void onClick(View view){
@@ -254,6 +285,7 @@ public class Resenje extends AppCompatActivity {
                     break;
                 case "-":
                     s=ts.nextToken();
+                    pravilo.dodajIzraz("-");
                     pravilo.dodajPreduslov(s);
                     pravilo.preduslov.getLast().setNegacija(true);
                     pravilo.dodajIzraz(s +" ");
@@ -323,6 +355,8 @@ public class Resenje extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                finish();
+                System.exit(0);
             }
         })
                 .setTitle("Upozorenje!").create();
@@ -334,6 +368,8 @@ public class Resenje extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                finish();
+                System.exit(0);
             }
         })
                 .setTitle("Upozorenje!").create();

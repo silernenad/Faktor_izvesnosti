@@ -165,6 +165,8 @@ public class Pravilo implements Serializable {
                 case "ILI":
                     koren.setOperacija(s);
                     break;
+                case "-":
+                    break;
                 default:
                     dodajOperand(koren, nadjiPreduslov(s));
                     break;

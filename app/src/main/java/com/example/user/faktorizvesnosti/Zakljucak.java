@@ -134,10 +134,8 @@ public class Zakljucak implements Serializable{
                     " svih elemenata pretpostavke pravila P" + tekPravilo.getRedniBr() +
                     " posebno, mozemo izracunati meru poverenja: \n MB(eP" + tekPravilo.getRedniBr() +
                     ")\n i meru nepoverenja \n MD(eP" + tekPravilo.getRedniBr()+") \npretpostavke " +
-                    "pravila P"+ tekPravilo.getRedniBr()+ ".");
+                    "pravila P"+ tekPravilo.getRedniBr()+ ".\n");
 
-
-            //// TODO: 12/16/2015 vidi da pre ovog izracunavanje ubacis da stampa i izraz i ubaci prvo - i pazi da ne sjebe stablo
 
             //sada su svi preduslovi definisani tj nisu zakljucci
             //sad treba izracunati MB(eP1) i MD(eP1)
@@ -145,13 +143,28 @@ public class Zakljucak implements Serializable{
             StringBuilder stringBuilder=new StringBuilder();
             double broj=tekPravilo.getKoren().racunajMB(stringBuilder);
             Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
-                            ") = "+stringBuilder + " = " + broj + "\n");
+                    ") = ");
+            if (tekPravilo.getKoren().getOperacija().equals("I"))
+                Resenje.poruka.append("min("+tekPravilo.getIzraz()+") = ");// I-min
+            else
+                Resenje.poruka.append("max("+tekPravilo.getIzraz()+") = ");// ILI-max
+
+            Resenje.poruka.append(stringBuilder + " = " + broj + "\n");
             tekPravilo.setMB_P(broj);
+
 
             stringBuilder = new StringBuilder();
             double broj1=tekPravilo.getKoren().racunajMD(stringBuilder);
             Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
-                            ") = "+stringBuilder + " = " + broj1 + "\n");
+                            ") = " );
+            if (tekPravilo.getKoren().getOperacija().equals("I"))
+                Resenje.poruka.append("max("+tekPravilo.getIzraz()+") = ");//I-max
+            else
+                Resenje.poruka.append("min("+tekPravilo.getIzraz()+") = ");//ILI-min
+
+
+
+            Resenje.poruka.append(stringBuilder + " = " + broj1 + "\n");
             tekPravilo.setMD_P(broj1);
 
             //MB(z1,eP1) i MD(z1,eP1)

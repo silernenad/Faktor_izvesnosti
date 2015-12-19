@@ -34,7 +34,14 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+/*
+    public void gasi(View view){
 
+            finish();
+            System.exit(0);
+
+    }
+*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

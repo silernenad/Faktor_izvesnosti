@@ -11,7 +11,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_pravila"
-    tools:context="com.example.user.faktorizvesnosti.Pravila">
+    tools:context="com.example.user.faktorizvesnosti.Pravila"
+    android:background="@drawable/pozadina">
 
     <Button
         android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
         android:text="Pravila"
         android:layout_above="@+id/button2"
         android:layout_alignParentTop="true"
-        android:gravity="top" />
+        android:gravity="top"
+        android:background="@drawable/pozadina" />
 
 </RelativeLayout>

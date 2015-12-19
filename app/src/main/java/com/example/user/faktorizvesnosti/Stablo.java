@@ -22,6 +22,9 @@ public class Stablo {
     public void setNum(int a){
         this.num=a;
     }
+    public String getOperacija(){
+        return operacija;
+    }
 
     public double racunajMB(StringBuilder b){
         double broj=0;

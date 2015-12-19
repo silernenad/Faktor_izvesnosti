@@ -21,6 +21,19 @@ public class Ostalo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ostalo);
 
+    }
+    /*
+    protected void onStart() {
+        super.onStart();
+        id=1;
+    }
+*/
+    @Override
+    protected void onStart() {
+        super.onStart();
+        id=1;
+
+
         Bundle data = getIntent().getExtras();
         String pravilaMessage = data.getString("pravila");
 
@@ -97,7 +110,7 @@ public class Ostalo extends AppCompatActivity {
         String pravilaMessage = data.getString("pravila");
 
         //sprema podatke za slanje
-        Intent i = new Intent(this,Resenje.class);
+       Intent i = new Intent(this,Resenje.class);
         i.putExtra("pravila", pravilaMessage);
 
 
@@ -248,6 +261,8 @@ public class Ostalo extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                finish();
+                System.exit(0);
             }
         })
                 .setTitle("Upozorenje!").create();
@@ -259,10 +274,14 @@ public class Ostalo extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                finish();
+                System.exit(0);
             }
         })
                 .setTitle("Upozorenje!").create();
         upozorenje.show();
     }
+
+
 
 }

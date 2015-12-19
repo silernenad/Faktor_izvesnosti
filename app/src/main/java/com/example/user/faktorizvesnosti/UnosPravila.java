@@ -27,4 +27,10 @@ public class UnosPravila extends AppCompatActivity {
         i.putExtra("pravila", pravilaMessage);
         startActivity(i);
         }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        id=1;
+    }
 }
