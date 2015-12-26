@@ -17,7 +17,14 @@ public class Algoritam extends AppCompatActivity {
         algoritam.setText(
                        "NACIN UNOSA: \n"+
                        "\n\n"     +
-
+                               "U drugoj aktovnosti u tekstualnom polju sa nazovom Pravila treba" +
+                               "uneti pravila postujuci gramatiku.\n Klikom na dugme " +
+                               "DEFINISITE PRAVILA I ZAKLJUCAK prelazi se na sledecu aktivnost.\n" +
+                               "U gornjem tekstualnom polju pojavice se cinjenice i pored njih" +
+                               " treba uneti meru poverenja za svaku od njuh, u opsegu od 0 do 1. \n" +
+                               "Udonjem tekstualnom polju treba uneti zakljucak za koji se trazi" +
+                               "faktor izvesnosti.\n"
+                          +
 
                         "ALGORITAM: \n" +
                         "1)Model faktora izvesnosti bio je najpre razvijen u ekspertskom sistemu Mycin, MIT.     \n" +

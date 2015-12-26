@@ -22,7 +22,8 @@
         android:layout_alignParentStart="true"
         android:text="Opazanja"
 
-        android:layout_above="@+id/zakljucakInput" />
+        android:layout_above="@+id/zakljucakInput"
+        android:background="@drawable/pozadina" />
 
 
 
@@ -55,7 +56,8 @@
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:text="Zakljucak"
-      android:layout_above="@+id/button3" />
+      android:layout_above="@+id/button3"
+      android:background="@drawable/pozadina" />
 
 
 

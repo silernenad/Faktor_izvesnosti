@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class Pravilo implements Serializable {
 
-    private double MB_ =0;          //MB'(z1,eP1)          //faktorI kod simulatora
+    private double MB_ =0;          //MB'(z1,eP1)
     private double MD_ =0;
     private double MB = 0;          //MB(z1,eP1)
     private double MD = 0;
@@ -99,12 +99,12 @@ public class Pravilo implements Serializable {
         setRedniBr(a);
     }
 
-    public void reset(){        //da li treba ensto za stablo????????????
+    public void reset(){
         setMB(0.0);
         setMD(0.0);
         setRedniBr(0);
         setZakljucak(new Zakljucak());
-
+//stablo
 
         preduslov.clear();
         setIzraz(" ");

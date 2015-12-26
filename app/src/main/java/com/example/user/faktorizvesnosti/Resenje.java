@@ -21,7 +21,6 @@ public class Resenje extends AppCompatActivity {
         setContentView(R.layout.activity_resenje);
 
     }
-//vidi da li radi
     @Override
     protected void onStart() {
         super.onStart();
@@ -114,7 +113,7 @@ public class Resenje extends AppCompatActivity {
                     String tekPred;
                     for (int j = 0; j < tekPravilo.preduslov.size(); j++) {    //obailazi sve preduslove
                         tekPred = tekPravilo.preduslov.get(j).getNaziv();
-                        if (tekPred.equals(s)) {                                      //ovo je nesto sumnjivo
+                        if (tekPred.equals(s)) {
                             if (broj >= 0) tekPravilo.preduslov.get(j).setMB(broj);
                             else tekPravilo.preduslov.get(j).setMD(broj);
                             break;
@@ -141,14 +140,7 @@ public class Resenje extends AppCompatActivity {
 
 
         //ZAKLJUCAK KOJI SE TRAZI
-/*
-        Zakljucak glavni=new Zakljucak(zakljucakMessage);
-        for (int i=0;i<listaZakljucaka.size();i++){
-            if (listaZakljucaka.get(i).getNaziv().equals(glavni.getNaziv()))
-                glavni = listaZakljucaka.get(i);
-            break;
-        }
-*/
+
         if (zakljucakMessage.equals(null)||listaZakljucaka.nadji(zakljucakMessage)==null){
             ispis(this.findViewById(android.R.id.content),
                     "Zakljucak nije unet ili ne postoji pod tim nazivom");
@@ -162,16 +154,7 @@ public class Resenje extends AppCompatActivity {
                     "=" + glavni + "\n pomocu formule:\n");
 
             if (glavni.getBrPravila() == 1) {
-            /*
-            String pravila=glavni.getPravila();
-            StringTokenizer a = new StringTokenizer(pravila);
-            String tek;
-            tek=a.nextToken();
-            poruka.append("CF(z"+ glavni.getRedniBroj()+",eP"+tek+")="+
-                "MB(z"+ glavni.getRedniBroj()+",eP"+tek+") - "+
-                 "MD(z"+ glavni.getRedniBroj()+",eP"+tek+")  "
-            );
-            */
+
                 poruka.append("CF(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ")=" +
                                 "MB(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ") - " +
                                 "MD(z" + glavni.getRedniBroj() + ",eP" + glavni.getPravila() + ")  "
@@ -193,7 +176,7 @@ public class Resenje extends AppCompatActivity {
             poruka.append("\n na onovu pravila ");
 
             for (int i = 0; i < glavni.getBrPravila(); i++) {
-                //           StringTokenizer tokenizer=new StringTokenizer(glavni.getPravila());
+
                 String tek = glavni.getPravila();
                 ts = new StringTokenizer(tek);
                 int brojP = Integer.parseInt(ts.nextToken());
@@ -237,16 +220,9 @@ public class Resenje extends AppCompatActivity {
                 ispis(this.findViewById(android.R.id.content),
                         "Greska!\nProverite unete podatke!");
             }
+
             resenjeText.setText(poruka);
 
-
-            //// TODO: 12/19/2015 porobaj da napises onStart metodu ili medobu za dugme BACK
-
-
-        /*
-        onStart se poziva posle onCreate i
-        kad activity posatne envidljiv pa se vrati u njega
-         */
         }
     }
 
@@ -351,7 +327,8 @@ public class Resenje extends AppCompatActivity {
     }
     public void ispis(View view){
         AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);
-        upozorenje.setMessage("Greska u gramatici!\nProverite pravilo broj " + id).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        upozorenje.setMessage("Greska u gramatici!\n" + "Proverite pravilo broj " + id)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

@@ -2,10 +2,10 @@ package com.example.user.faktorizvesnosti;
 
 
 public class ElemPreduslov {
-    private String naziv;
-    private double MB = 0;      //MB(e1)
-    private double MD = 0;
-    boolean negacija=false;
+    private String naziv;       //naziv elementa pravila
+    private double MB = 2;      //MB(e1)
+    private double MD = 2;
+    boolean negacija=false;     //negacija elementa
 
 
 

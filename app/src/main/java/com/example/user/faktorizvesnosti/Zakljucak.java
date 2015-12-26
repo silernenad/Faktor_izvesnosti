@@ -7,10 +7,10 @@ import java.util.StringTokenizer;
 
 public class Zakljucak implements Serializable{
 
-    private String naziv=null;
+    private String naziv=null;  //naziv zakljucka
     private String pravila; //P1,P2,...  ako ima vise od jednog pravila koja vode do zakljucka
-    private double CF = -2.0;
-    private double MB=0;        //kada ima kumulativno inace je kao za preduslov
+    private double CF = -2.0;   //faktor izvesnosti zakljucka
+    private double MB=0;
     private double MD=0;
     private int redniBr = 0;        //mozda i ne treba...
     private int brPravila=1; //brj pravila iz kojih sledi zakljucak
@@ -80,7 +80,7 @@ public class Zakljucak implements Serializable{
             for (int j = 0;j<tekPravilo.preduslov.size();j++){
                 String tekString =tekPravilo.preduslov.get(j).getNaziv();
                 ElemPreduslov tekElem=tekPravilo.preduslov.nadji(tekString);
-                if (0==tekElem.getMB() && 0== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
+                if (2==tekElem.getMB() && 2== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
                     Zakljucak tekZakljucak = listaZakljucaka.nadji(tekElem.getNaziv());
                     Resenje.poruka.append("Elemenat:\n"
                             +tekZakljucak.getNaziv()+"\n" +
@@ -96,8 +96,9 @@ public class Zakljucak implements Serializable{
                     tekElem.setMB(tekZakljucak.getMB());
                     tekElem.setMD(tekZakljucak.getMD());
 
-                    //// TODO: 12/16/2015 dodaj tekst ovde za slucaj kada treba da se izracunaju pretpostavke
-
+                    Resenje.poruka.append("\nSada kada smo izracunali mere poverenja i nepoverenja" +
+                            "elementa\n"+tekZakljucak.getNaziv()+"\nmozemo se vratiti na predhodno" +
+                            "izracunavanje.\n");
                 }
                 else {
 
@@ -137,7 +138,7 @@ public class Zakljucak implements Serializable{
                     "pravila P"+ tekPravilo.getRedniBr()+ ".\n");
 
 
-            //sada su svi preduslovi definisani tj nisu zakljucci
+            //sada su svi preduslovi izracunati
             //sad treba izracunati MB(eP1) i MD(eP1)
             //racunamo preko stabla
             StringBuilder stringBuilder=new StringBuilder();

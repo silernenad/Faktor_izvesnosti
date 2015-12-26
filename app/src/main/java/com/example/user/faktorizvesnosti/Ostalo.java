@@ -22,12 +22,7 @@ public class Ostalo extends AppCompatActivity {
         setContentView(R.layout.activity_ostalo);
 
     }
-    /*
-    protected void onStart() {
-        super.onStart();
-        id=1;
-    }
-*/
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -2,7 +2,6 @@ package com.example.user.faktorizvesnosti;
 
 
 import java.util.LinkedList;
-import java.util.StringTokenizer;
 
 public class Stablo {
     private String operacija="I";
@@ -63,7 +62,7 @@ public class Stablo {
                         b.append(" " +operandi.get(i).getMB()+",");
                     }
                 }
-            if (dete.size()!=0){                                                                    //zasto je ovde usao?????
+            if (dete.size()!=0){
                 for (int i =0;i<dete.size();i++)
                     min=Math.min(min,dete.get(i).racunajMB(b));
             }
@@ -71,11 +70,7 @@ public class Stablo {
         }
         b.append(")");
         return broj;
-        /*
-        else {          //sluvaj kada se preduslov pravila sastoji iz samo jednog elementa
-            return operandi.getFirst().getMB();
-        }
-        */
+
     }
 
 
@@ -103,9 +98,7 @@ public class Stablo {
             }
             broj = min;
 
-            //probaj ovo za izbacivanj zadnjeg chara tj da be bi ispisivao zarez na poslednem
-            //b.deleteCharAt(b.length()-1) ili
-            //b.setLength(b.length() - 1);
+
             b.append(")");
         }
         else if (operacija.equals("I")){
@@ -129,11 +122,7 @@ public class Stablo {
             broj = max;
         }
         b.append(")");
-        /*
-        else {
-            return operandi.getFirst().getMD();
-        }
-        */
+
         return broj;
 
     }
