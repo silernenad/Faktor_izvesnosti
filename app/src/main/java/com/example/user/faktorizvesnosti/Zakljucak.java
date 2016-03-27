@@ -1,11 +1,10 @@
 package com.example.user.faktorizvesnosti;
 
 
-import java.io.Serializable;
 import java.util.StringTokenizer;
 
 
-public class Zakljucak implements Serializable{
+public class Zakljucak{
 
     private String naziv=null;  //naziv zakljucka
     private String pravila; //P1,P2,...  ako ima vise od jednog pravila koja vode do zakljucka

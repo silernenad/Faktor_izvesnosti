@@ -32,10 +32,10 @@ public class Algoritam extends AppCompatActivity {
                         "   datog skupa događaja, pojava, činjenica, opažanja.                                     \n\n" +
 
                         "3)Definišu se dva pojma MB(h,e)i MD(h,e), koja predstavljaju subjektivne verovatnoće.     \n" +
-                        "4)Umesto tradicionalnih metoda verovatnoće, teško da se tačno procene-Bayes'ovo pravilom.  \n\n" +
+                        "4)Umesto tradicionalnih metoda verovatnoće, teško da se tačno procene - Bayes'ovo pravilo.  \n\n" +
 
                         "5)Svakom pravilu u sistemu se dodeljuje faktor izvesnosti koji se zasniva na ekspertskoj  \n" +
-                        "  proceni i intuiciji-CF i komponenta faktora izvesnosti.                                 \n\n" +
+                        "  proceni i intuiciji - CF i komponenta faktora izvesnosti.                                 \n\n" +
 
                         "6)Pravila moraju da budu tako strukturirana da bilo koje pravilo doprinosi poverenju ili  \n" +
                         "  nepoverenju u dati zaključak. Komponenta faktora izvesnosti se dobija na sledeći način: \n" +

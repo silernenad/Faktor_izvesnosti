@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars = "vertical"
-        android:text="Izracunaj"
+        android:text="Izračunaj"
         android:id="@+id/button3"
         android:onClick="onClick"
         android:layout_gravity="center_horizontal"

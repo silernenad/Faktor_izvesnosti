@@ -1,12 +1,9 @@
 package com.example.user.faktorizvesnosti;
 
-
-import java.io.Serializable;
-import java.security.PublicKey;
 import java.util.StringTokenizer;
 
 
-public class Pravilo implements Serializable {
+public class Pravilo {
 
     private double MB_ =0;          //MB'(z1,eP1)
     private double MD_ =0;
