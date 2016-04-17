@@ -105,18 +105,21 @@ public class Ostalo extends AppCompatActivity {
         String pravilaMessage = data.getString("pravila");
 
         //sprema podatke za slanje
-       Intent i = new Intent(this,Resenje.class);
-        i.putExtra("pravila", pravilaMessage);
+        Intent i = new Intent(this,Resenje.class);
+
+
 
 
 
 
         final EditText opazanjaInput = (EditText) findViewById(R.id.opazanjaInput);
         String opazanjaMessage = opazanjaInput.getText().toString();
-        i.putExtra("opazanja", opazanjaMessage);
-
         final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
         String zakljucakMessage = zakljucakInput.getText().toString();
+
+
+        i.putExtra("pravila", pravilaMessage);
+        i.putExtra("opazanja", opazanjaMessage);
         i.putExtra("zakljucak", zakljucakMessage);
 
         startActivity(i);
@@ -194,6 +197,9 @@ public class Ostalo extends AppCompatActivity {
 
             String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade
 
+            if (mb.equals("(")){
+                mb = ts.nextToken();
+            }
             mb = mb.replace("(", "");
             mb = mb.replace(")", "");
             double broj=0.0;
@@ -212,7 +218,13 @@ public class Ostalo extends AppCompatActivity {
             if (!ts.hasMoreTokens()){
                 ispis(this.findViewById(android.R.id.content));
             }
-            Zakljucak z = new Zakljucak(ts.nextToken());
+            mb = ts.nextToken();
+            if (mb.equals(")")){
+                mb = ts.nextToken();
+            }
+
+           // Zakljucak z = new Zakljucak(ts.nextToken());
+            Zakljucak z = new Zakljucak(mb);
             pravilo.setZakljucak(z);   //dodaje se zakljucak   Proveri!!!
 
             Zakljucak zakljucak=z;

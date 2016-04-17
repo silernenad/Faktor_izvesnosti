@@ -32,9 +32,18 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="Pravila"
-        android:layout_above="@+id/button2"
         android:layout_alignParentTop="true"
         android:gravity="top"
-        android:background="@drawable/pozadina" />
+        android:background="@drawable/pozadina"
+        android:layout_above="@+id/bDodaj" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dodaj pravilo"
+        android:id="@+id/bDodaj"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:onClick="dodajPravilo" />
 
 </RelativeLayout>

@@ -28,6 +28,27 @@ public class UnosPravila extends AppCompatActivity {
         startActivity(i);
         }
 
+    public  void dodajPravilo(View view){
+        Intent i = new Intent(this,Ostalo.class);
+        final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
+        String pravilaMessage = pravilaInput.getText().toString();                  //ulazni Sting
+        StringBuilder poruka=new StringBuilder();
+        if (id==1){
+            poruka.append("P1:\nAKO\n\nONDA\n( ) ");
+        }
+        else {
+            poruka.append(pravilaMessage);
+            poruka.append("\nP" + id + ":\n" +
+                    "AKO\n" +
+                    "\n" +
+                    "ONDA\n" +
+                    "( ) ");
+        }
+        id++;
+
+        pravilaInput.setText(poruka);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

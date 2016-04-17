@@ -28,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+   //// TODO: 4/14/2016 dugme za ucitavanje iz menorije
+
+
+    public void ucitaj(View view) {
+        Intent i = new Intent(this,UnosPravila.class);
+        startActivity(i);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

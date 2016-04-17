@@ -14,6 +14,7 @@ public class Resenje extends AppCompatActivity {
     static int id=1;
     static int idZak=1;
     static StringBuilder poruka= new StringBuilder();
+//    static int korak = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,7 @@ public class Resenje extends AppCompatActivity {
         else {
             Zakljucak glavni = listaZakljucaka.nadji(zakljucakMessage);
 
-
+//            poruka.append("Korak " + korak++);
             poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj() +
                     "=" + glavni + "\n pomocu formule:\n");
 
@@ -279,7 +280,9 @@ public class Resenje extends AppCompatActivity {
         }
         if (ts.hasMoreTokens()) {
             String mb = ts.nextToken(); //dohvata se vrednost u zagradama i izbauju se zagrade
-
+            if (mb.equals("(")){
+                mb = ts.nextToken();
+            }
             mb = mb.replace("(", "");
             mb = mb.replace(")", "");
 
@@ -289,8 +292,14 @@ public class Resenje extends AppCompatActivity {
 
             /*     UBACIVANJE ZAKLJUCKA U LISTU PRAVILA    */
 
-            Zakljucak zakljucak = new Zakljucak(ts.nextToken());
+ //           Zakljucak zakljucak = new Zakljucak(ts.nextToken());
+            mb = ts.nextToken();
+            if (mb.equals(")")){
+                mb = ts.nextToken();
+            }
 
+            // Zakljucak z = new Zakljucak(ts.nextToken());
+            Zakljucak zakljucak = new Zakljucak(mb);
             if (!listaZakljucaka.isEmpty()) {                   //lista nije prazna
 
                 Zakljucak tek;
