@@ -79,7 +79,7 @@ public class FileChooser extends ListActivity {
     }
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
+
         super.onListItemClick(l, v, position, id);
         Option o = adapter.getItem(position);
         if(o.getData().equalsIgnoreCase("folder")||o.getData().equalsIgnoreCase("parent directory")){
@@ -91,7 +91,7 @@ public class FileChooser extends ListActivity {
             onFileClick(o);
         }
     }
-    public void onFileClick(Option o)          //// TODO: 4/17/2016 ovde se ispisuje promeniti na ucitavanje!!!
+    public void onFileClick(Option o)
     {
         MainActivity.path = o.getPath();
 //        Toast.makeText(this, "File Clicked: "+o.getName(), Toast.LENGTH_SHORT).show();

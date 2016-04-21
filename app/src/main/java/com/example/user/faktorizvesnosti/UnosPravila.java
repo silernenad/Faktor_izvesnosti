@@ -12,12 +12,20 @@ import java.util.*;
 public class UnosPravila extends AppCompatActivity {
 
     static int id=1;
-
+    String opazanja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unos_pravila);
+
+        Bundle data = getIntent().getExtras();
+        String pravila = data.getString("pravila");
+        opazanja = data.getString("opazanja");
+        if (pravila!=null) {
+            final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
+            pravilaInput.setText(pravila);
+        }
     }
 
     public void onClickPravila(View view){
@@ -25,6 +33,7 @@ public class UnosPravila extends AppCompatActivity {
         final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
         String pravilaMessage = pravilaInput.getText().toString();                  //ulazni Sting
         i.putExtra("pravila", pravilaMessage);
+        i.putExtra("opazanja",opazanja);
         startActivity(i);
         }
 

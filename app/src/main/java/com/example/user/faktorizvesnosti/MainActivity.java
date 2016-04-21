@@ -14,10 +14,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
-    static String path;
-
+    static String path;                                                                         // todo ovo izbaci zajedno sa FileChooser
+    StringBuilder stringBuilder = new StringBuilder();                                          //todo ova dva reda mozda bolje da se stavi u onStart()!!!!!!!!!!!!!
+    String opazanja="";
+    static boolean file=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +54,24 @@ public class MainActivity extends AppCompatActivity {
                                     InputStreamReader isr = new InputStreamReader(fis);
                                     BufferedReader buff = new BufferedReader(isr);
                                     String line;
-                                    while ((line = buff.readLine()) != null) {
+                                    StringTokenizer tokenizer;
 
-                                        System.out.print("radi");
+                                    file=true;
+                                    while ((line = buff.readLine()) != null) {
+                                        tokenizer = new StringTokenizer(line);
+                                        if (tokenizer.nextToken().equals("AKO")) {
+                                            stringBuilder.append(line);
+                                            stringBuilder.append("\n");
+                                        }
+                                        else {
+                                            opazanja = opazanja + line +"\n";
+
+                                        }
 
                                     }
-                                } catch (FileNotFoundException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
+
                                 } catch (IOException e) {
-                                    // TODO Auto-generated catch block
+
                                     e.printStackTrace();
                                 }
                                 /********************************************************/
@@ -75,14 +86,18 @@ public class MainActivity extends AppCompatActivity {
 
                 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
             }
         });
+
         /****************************************/
     }
 
     public void onClickPodaci(View view){
 
-       Intent i = new Intent(this,UnosPravila.class);
+        Intent i = new Intent(this,UnosPravila.class);
+        i.putExtra("pravila",stringBuilder.toString());
+        i.putExtra("opazanja",opazanja);
         startActivity(i);
 
 

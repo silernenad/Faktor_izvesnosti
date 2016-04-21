@@ -34,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Učitavanje podataka"
+        android:text="Učitaj txt fajl"
         android:id="@+id/button1"
         android:layout_alignTop="@+id/unosButton"
         android:layout_alignParentRight="true"

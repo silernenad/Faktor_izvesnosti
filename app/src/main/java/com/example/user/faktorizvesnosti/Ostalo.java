@@ -16,6 +16,7 @@ public class Ostalo extends AppCompatActivity {
     static int id=1;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,7 @@ public class Ostalo extends AppCompatActivity {
 
         Bundle data = getIntent().getExtras();
         String pravilaMessage = data.getString("pravila");
+        String mainOpazanja = data.getString("opazanja");
 
         ListaPravila2 listaPravila = new ListaPravila2();        //lista svih pravila
 
@@ -89,10 +91,22 @@ public class Ostalo extends AppCompatActivity {
 
 
 
-    final TextView opazanjaText=(TextView)findViewById(R.id.opazanjaInput);
-    opazanjaText.setText(opazanja);
+        final TextView opazanjaText=(TextView)findViewById(R.id.opazanjaInput);
+
+        if (MainActivity.file=true){
+            String mainZakljucak = "";
+            opazanja = new StringBuilder();
+            StringTokenizer tokenizer = new StringTokenizer(mainOpazanja,"\n");
+            while (tokenizer.hasMoreTokens()){
+                opazanja.append(mainZakljucak);
+                mainZakljucak = tokenizer.nextToken();
+            }
+            final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
+            zakljucakInput.setText(mainZakljucak);
+        }
 
 
+        opazanjaText.setText(opazanja);
 
 
     }
