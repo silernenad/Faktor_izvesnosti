@@ -19,11 +19,10 @@ public class FileChooser extends ListActivity {
     private FileArrayAdapter adapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_file_chooser);
+        setContentView(R.layout.activity_file_chooser);
         currentDir = new File("/sdcard/");
         fill(currentDir);
 
@@ -50,7 +49,7 @@ public class FileChooser extends ListActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void fill(File f)
+    public void fill(File f)
     {
         File[]dirs = f.listFiles();
         this.setTitle("Current Dir: "+f.getName());
@@ -92,10 +91,15 @@ public class FileChooser extends ListActivity {
             onFileClick(o);
         }
     }
-    private void onFileClick(Option o)          //// TODO: 4/17/2016 ovde se ispisuje promeniti na ucitavanje!!! 
+    public void onFileClick(Option o)          //// TODO: 4/17/2016 ovde se ispisuje promeniti na ucitavanje!!!
     {
+        MainActivity.path = o.getPath();
+//        Toast.makeText(this, "File Clicked: "+o.getName(), Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "File Clicked: "+o.getName(), Toast.LENGTH_SHORT).show();
+    }
+    public File getCurrentDirectory()
+    {
+        return currentDir;
     }
 }
 

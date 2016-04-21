@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.user.faktorizvesnosti" >
+    package="com.example.user.faktorizvesnosti">
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-
-        <uses-sdk android:minSdkVersion="13"
-            android:targetSdkVersion="17"
-            android:maxSdkVersion="23" />
+        android:theme="@style/AppTheme">
+        <uses-sdk
+            android:maxSdkVersion="23"
+            android:minSdkVersion="13"
+            android:targetSdkVersion="17" />
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,23 +26,19 @@
         <activity
             android:name=".UnosPravila"
             android:label="@string/title_activity_pravila"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Algoritam"
             android:label="@string/title_activity_algoritam"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Ostalo"
             android:label="@string/title_activity_ostalo"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Resenje"
             android:label="@string/title_activity_resenje"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <!--
         <activity
             android:name=".UnosPravila"
@@ -51,6 +47,10 @@
         </activity>
         -->
 
-    </application>
-
-</manifest>
+        <!--
+                <activity android:name=".Main2Activity" />
+                <activity android:name=".FileChoose"></activity>
+                -->
+            </application>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </manifest>

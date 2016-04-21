@@ -35,11 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Učitavanje podataka"
-        android:id="@+id/ucitavanjeButton"
+        android:id="@+id/button1"
         android:layout_alignTop="@+id/unosButton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="ucitaj" />
+        android:onClick="onClick" />
     <!--
     <ImageButton
         style="?android:attr/buttonStyleSmall"
