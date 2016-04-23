@@ -83,11 +83,13 @@ public class Stablo {
                 for (int i = 0;i<operandi.size();i++){
                     if (operandi.get(i).getNegacija()) {
                         min = Math.min(operandi.get(i).getMB(), min);
-                        b.append(" -" +operandi.get(i).getMB()+",");
+             //           b.append(" -" +operandi.get(i).getMB()+",");
+                        b.append(" -" +operandi.get(i).getMD()+",");
                     }
                     else {
                         min = Math.min(operandi.get(i).getMD(), min);
-                        b.append(" "+operandi.get(i).getMB()+",");
+              //          b.append(" "+operandi.get(i).getMB()+",");
+                        b.append(" "+operandi.get(i).getMD()+",");
                     }
                 }
             }
@@ -108,11 +110,13 @@ public class Stablo {
                 for (int i = 0;i<operandi.size();i++) {
                     if (operandi.get(i).getNegacija()) {
                         max = Math.max(operandi.get(i).getMB(), max);
-                        b.append(" -" + operandi.get(i).getMB() + ",");
+       //                 b.append(" -" + operandi.get(i).getMB() + ",");
+                        b.append(" -" + operandi.get(i).getMD() + ",");
                     }
                     else {
                         max = Math.max(operandi.get(i).getMD(), max);
-                        b.append(" " + operandi.get(i).getMB() + ",");
+   //                     b.append(" " + operandi.get(i).getMB() + ",");
+                        b.append(" " + operandi.get(i).getMD() + ",");
                     }
                 }
             if (dete.size()!=0){

@@ -2,6 +2,7 @@ package com.example.user.faktorizvesnosti;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -19,21 +20,30 @@ public class UnosPravila extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unos_pravila);
 
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        id=1;
         Bundle data = getIntent().getExtras();
-        String pravila = data.getString("pravila");
-        opazanja = data.getString("opazanja");
-        if (pravila!=null) {
+        String pravila = data.getString("mPravila");
+        opazanja = data.getString("mOpazanja");
+        if (MainActivity.file) {
             final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
             pravilaInput.setText(pravila);
         }
+
     }
+
+
 
     public void onClickPravila(View view){
         Intent i = new Intent(this,Ostalo.class);
         final EditText pravilaInput = (EditText) findViewById(R.id.pravilaInput);
         String pravilaMessage = pravilaInput.getText().toString();                  //ulazni Sting
         i.putExtra("pravila", pravilaMessage);
-        i.putExtra("opazanja",opazanja);
+        i.putExtra("mOpazanja",opazanja);
         startActivity(i);
         }
 
@@ -58,9 +68,5 @@ public class UnosPravila extends AppCompatActivity {
         pravilaInput.setText(poruka);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        id=1;
-    }
+
 }

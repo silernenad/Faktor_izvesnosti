@@ -11,13 +11,12 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
-    static String path;                                                                         // todo ovo izbaci zajedno sa FileChooser
+  //  static String path;
     StringBuilder stringBuilder = new StringBuilder();                                          //todo ova dva reda mozda bolje da se stavi u onStart()!!!!!!!!!!!!!
     String opazanja="";
     static boolean file=false;
@@ -96,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickPodaci(View view){
 
         Intent i = new Intent(this,UnosPravila.class);
-        i.putExtra("pravila",stringBuilder.toString());
-        i.putExtra("opazanja",opazanja);
+        i.putExtra("mPravila",stringBuilder.toString());
+        i.putExtra("mOpazanja",opazanja);
         startActivity(i);
 
 

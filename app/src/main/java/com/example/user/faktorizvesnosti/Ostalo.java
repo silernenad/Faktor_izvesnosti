@@ -32,7 +32,7 @@ public class Ostalo extends AppCompatActivity {
 
         Bundle data = getIntent().getExtras();
         String pravilaMessage = data.getString("pravila");
-        String mainOpazanja = data.getString("opazanja");
+        String mainOpazanja = data.getString("mOpazanja");
 
         ListaPravila2 listaPravila = new ListaPravila2();        //lista svih pravila
 
@@ -92,21 +92,23 @@ public class Ostalo extends AppCompatActivity {
 
 
         final TextView opazanjaText=(TextView)findViewById(R.id.opazanjaInput);
-
-        if (MainActivity.file=true){
+        opazanjaText.setText(opazanja);
+        if (MainActivity.file){
             String mainZakljucak = "";
             opazanja = new StringBuilder();
             StringTokenizer tokenizer = new StringTokenizer(mainOpazanja,"\n");
             while (tokenizer.hasMoreTokens()){
                 opazanja.append(mainZakljucak);
+                opazanja.append("\n");
                 mainZakljucak = tokenizer.nextToken();
             }
             final EditText zakljucakInput = (EditText) findViewById(R.id.zakljucakInput);
             zakljucakInput.setText(mainZakljucak);
+            opazanjaText.setText(opazanja);
         }
 
 
-        opazanjaText.setText(opazanja);
+
 
 
     }
@@ -172,9 +174,10 @@ public class Ostalo extends AppCompatActivity {
                     break;
                 case "(":
                     pravilo.dodajIzraz(s +" ");
-                    if (jeZnak(prethodni))
-                        greska=true;
+                   if (prethodni.equals(")"))
+                       greska=true;
                     break;
+
                 case ")":
                     pravilo.dodajIzraz(s +" ");
                     if (jeZnak(prethodni))
@@ -184,8 +187,8 @@ public class Ostalo extends AppCompatActivity {
                     s=ts.nextToken();
                     pravilo.dodajPreduslov(s);
                     pravilo.dodajIzraz(s +" ");
-                    if (jeZnak(prethodni))
-                        greska=true;
+     //               if (jeZnak(prethodni))
+      //                  greska=true;
                     break;
 
                 default:
@@ -275,6 +278,9 @@ public class Ostalo extends AppCompatActivity {
     public boolean jeZnak(String string){
         return    string.equals("ILI")||string.equals("AKO")||string.equals("(")||string.equals(")")||
                 string.equals("I")||string.equals("-");
+    }
+    public boolean jeZagrada(String string){
+        return string.equals("(")||string.equals(")");
     }
     public void ispis(View view){
         AlertDialog.Builder upozorenje = new AlertDialog.Builder(this);

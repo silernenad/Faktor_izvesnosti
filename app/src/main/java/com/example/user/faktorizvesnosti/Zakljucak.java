@@ -7,12 +7,14 @@ import java.util.StringTokenizer;
 public class Zakljucak{
 
     private String naziv=null;  //naziv zakljucka
-    private String pravila; //P1,P2,...  ako ima vise od jednog pravila koja vode do zakljucka
+    private String pravila; //P1,P2,...  ako ima vise od jednog pravila koja vode do zakljucka    ako en isto je kao i redni broj...
     private double CF = -2.0;   //faktor izvesnosti zakljucka
-    private double MB=0;
-    private double MD=0;
-    private int redniBr = 0;        //mozda i ne treba...
-    private int brPravila=1; //brj pravila iz kojih sledi zakljucak
+ //   private double MB=0;
+//    private double MD=0;
+    private double MB=2;
+    private double MD=2;
+     private int redniBr = 0;        //mozda i ne treba...
+     private int brPravila=1; //brj pravila iz kojih sledi zakljucak
 
     public Zakljucak(String naziv) {
         this.naziv = naziv;
@@ -70,6 +72,7 @@ public class Zakljucak{
             Resenje.poruka.append("MB'(z"+this.redniBr+",eP"+tek+") \n i \n"
                     +"MD'(z"+this.redniBr+",eP"+tek+")"+
                     "su zadati u postavci zadatka\n");
+            Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
             Resenje.poruka.append("Da bi smo izracunali MB(ep"+tek+") \n i \n " +
                     "MD(ep"+tek+") \n moramo odrediti meru poverenja i meru nepoverenja " +
                     "svih elemenata pretpostavke.\n");
@@ -79,8 +82,9 @@ public class Zakljucak{
             for (int j = 0;j<tekPravilo.preduslov.size();j++){
                 String tekString =tekPravilo.preduslov.get(j).getNaziv();
                 ElemPreduslov tekElem=tekPravilo.preduslov.nadji(tekString);
-                if (2==tekElem.getMB() && 2== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
+                 if (2==tekElem.getMB() && 2== tekElem.getMD()){//nadjen je preduslov koji je u stvari zakljucak
                     Zakljucak tekZakljucak = listaZakljucaka.nadji(tekElem.getNaziv());
+                    Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
                     Resenje.poruka.append("Elemenat:\n"
                             +tekZakljucak.getNaziv()+"\n" +
                             "pretpostavke pravila P" +tekPravilo.getRedniBr() +"\n" +
@@ -94,15 +98,17 @@ public class Zakljucak{
 
                     tekElem.setMB(tekZakljucak.getMB());
                     tekElem.setMD(tekZakljucak.getMD());
-
-                    Resenje.poruka.append("\nSada kada smo izracunali mere poverenja i nepoverenja" +
-                            "elementa\n"+tekZakljucak.getNaziv()+"\nmozemo se vratiti na predhodno" +
+                     Resenje.poruka.append("\nKorak " + Resenje.korak++ + "");
+                    Resenje.poruka.append("\nSada kada smo izracunali mere poverenja i nepoverenja " +
+                            "elementa\n"+tekZakljucak.getNaziv()+"\nmozemo se vratiti na predhodno " +
                             "izracunavanje.\n");
-                }
+                 }
                 else {
-
+                     if (tekElem.getMB()==2)tekElem.setMB(0);       //ako su na default vrednosti tj ako nisu menjani staviti ih na 0
+                     if (tekElem.getMD()==2)tekElem.setMD(0);
+                    Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
                     Resenje.poruka.append("Element: \n"+tekString +"\n pretpostavke pravila P"+
-                        tekPravilo.getRedniBr()+ "je opazanje ciji je faktor izvesnosti zadat u " +
+                        tekPravilo.getRedniBr()+ " je opazanje ciji je faktor izvesnosti zadat u " +
                             "postavci i ne moramo ga racunati.");
                     Resenje.poruka.append("\nMera poverenja u njega je:\n MB("+
                         tekString+")="+ tekElem.getMB()+"\n a mera nepoverenja u njega je: MD("+
@@ -130,6 +136,7 @@ public class Zakljucak{
                 tekPravilo.setMD(broj3);
 */
             }
+            Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
             Resenje.poruka.append("Posto smo odredili meru poverenje i meru nepoverenja" +
                     " svih elemenata pretpostavke pravila P" + tekPravilo.getRedniBr() +
                     " posebno, mozemo izracunati meru poverenja: \n MB(eP" + tekPravilo.getRedniBr() +
@@ -141,7 +148,9 @@ public class Zakljucak{
             //sad treba izracunati MB(eP1) i MD(eP1)
             //racunamo preko stabla
             StringBuilder stringBuilder=new StringBuilder();
-            double broj=tekPravilo.getKoren().racunajMB(stringBuilder);
+            double broj=tekPravilo.getKoren().racunajMB(stringBuilder);                             //racunajMB
+
+            Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
             Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
                     ") = ");
             if (tekPravilo.getKoren().getOperacija().equals("I"))
@@ -154,8 +163,8 @@ public class Zakljucak{
 
 
             stringBuilder = new StringBuilder();
-            double broj1=tekPravilo.getKoren().racunajMD(stringBuilder);
-            Resenje.poruka.append("MB(eP" + tekPravilo.getRedniBr() +
+            double broj1=tekPravilo.getKoren().racunajMD(stringBuilder);                            //racunajMD
+            Resenje.poruka.append("MD(eP" + tekPravilo.getRedniBr() +
                             ") = " );
             if (tekPravilo.getKoren().getOperacija().equals("I"))
                 Resenje.poruka.append("max("+tekPravilo.getIzraz()+") = ");//I-max
@@ -169,6 +178,7 @@ public class Zakljucak{
 
             //MB(z1,eP1) i MD(z1,eP1)
 
+            Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
             Resenje.poruka.append("Mera poverenja i nepoverenja zakljucka: \n" + getNaziv()+
                     "\n na osnovu pravila P"+tekPravilo.getRedniBr()+" se sada mogu izracunati" +
                     " na osnovu formula:\n MB(z"+getRedniBroj()+",eP"+tekPravilo.getRedniBr()+
@@ -233,6 +243,7 @@ public class Zakljucak{
 */
 
 
+        Resenje.poruka.append("\nKorak " + Resenje.korak++ + "\n");
         Resenje.poruka.append("Sada na osnovu pocetne formule racunamo faktor izvenosti zakljucka:\n" +
                 "z = " + getNaziv()+"\n na onovu pravila ");
 
@@ -290,7 +301,7 @@ public class Zakljucak{
                             a1 +" + "+ tekPravilo.getMB()+" - "+  a1 +" * "+
                             tekPravilo.getMB()+" = "+ a3);
 
-            Resenje.poruka.append("Zbirna mera nepoverenja \nMBcum(z"+getRedniBroj()+",eP"+tek+
+            Resenje.poruka.append("\nZbirna mera nepoverenja \nMDcum(z"+getRedniBroj()+",eP"+tek+
                     "ep"+tek1+") = " +
                     "MD(z"+getRedniBroj()+",eP"+tek+") + " +
                     "MD(z"+getRedniBroj()+",eP"+tek1+") - " +
@@ -299,7 +310,7 @@ public class Zakljucak{
                     a2 +" + "+ tekPravilo.getMD()+" - "+  a2 +" * "+
                     tekPravilo.getMD()+" = "+ a4);
 
-            Resenje.poruka.append("CF(z" + getRedniBroj() +") = " +
+            Resenje.poruka.append("\nCF(z" + getRedniBroj() +") = " +
                     "MBcum(z" + getRedniBroj() + ",eP" + tek +"eP"+tek1+") -"+
                     "MDcum(z" + getRedniBroj() + ",eP" + tek +"eP"+tek1+") = "+
                     a3+" - "+ a4+ " = " );
@@ -308,6 +319,7 @@ public class Zakljucak{
         double cf= getMB()-getMD();
         setFaktorI(cf);
         Resenje.poruka.append(cf);
+
 
         }
 

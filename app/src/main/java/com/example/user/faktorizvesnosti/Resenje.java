@@ -14,18 +14,19 @@ public class Resenje extends AppCompatActivity {
     static int id=1;
     static int idZak=1;
     static StringBuilder poruka= new StringBuilder();
-//    static int korak = 1;
+    static int korak = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resenje);
 
+
     }
     @Override
     protected void onStart() {
         super.onStart();
-
+        korak = 0;
 
 
         poruka= new StringBuilder();
@@ -136,7 +137,7 @@ public class Resenje extends AppCompatActivity {
             listaPravila.get(i).uredi();
         }
 
-        //MD i MB zaljucaka pokazuju na MD i MB preduslova koji su u stvari zakljucci
+        //MD i MB zaljucaka pokazuju na MD i MB preduslova koji su u stvari zakljucci       //// TODO: 4/21/2016 mozda ovo i ne treba 
         listaPravila.urediPreduslove(listaZakljucaka);
 
 
@@ -150,7 +151,7 @@ public class Resenje extends AppCompatActivity {
         else {
             Zakljucak glavni = listaZakljucaka.nadji(zakljucakMessage);
 
-//            poruka.append("Korak " + korak++);
+            poruka.append("\nKorak " + korak++ +"\n");
             poruka.append("Racunamo faktor izvesnosti zakljucka: \n z" + glavni.getRedniBroj() +
                     "=" + glavni + "\n pomocu formule:\n");
 
@@ -229,6 +230,7 @@ public class Resenje extends AppCompatActivity {
 
 
     public void onClick(View view){
+        MainActivity.file=false;
         Intent i = new Intent(this,MainActivity.class);
         startActivity(i);
     }
