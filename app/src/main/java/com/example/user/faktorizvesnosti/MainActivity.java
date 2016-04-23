@@ -16,8 +16,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
-  //  static String path;
-    StringBuilder stringBuilder = new StringBuilder();                                          //todo ova dva reda mozda bolje da se stavi u onStart()!!!!!!!!!!!!!
+    StringBuilder stringBuilder = new StringBuilder();
     String opazanja="";
     static boolean file=false;
 
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/********************************************/
+
         //Button1
         Button dirChooserButton1 = (Button) findViewById(R.id.button1);
         dirChooserButton1.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Chosen FileOpenDialog File: " +
                                         m_chosen, Toast.LENGTH_LONG).show();
 
-                                /********************************************************/
 
                                 try {
                                     FileInputStream fis = new FileInputStream(m_chosen);
@@ -55,15 +53,21 @@ public class MainActivity extends AppCompatActivity {
                                     String line;
                                     StringTokenizer tokenizer;
 
-                                    file=true;
+                                    file = true;
                                     while ((line = buff.readLine()) != null) {
                                         tokenizer = new StringTokenizer(line);
-                                        if (tokenizer.nextToken().equals("AKO")) {
-                                            stringBuilder.append(line);
+                                        String temp = tokenizer.nextToken();
+                                        if (temp.equals("AKO")) {
+                                            stringBuilder.append(temp+"\n");
+                                            while (tokenizer.hasMoreTokens()){
+                                                temp = tokenizer.nextToken();
+                                                stringBuilder.append(temp+"\n");
+                                            }
+                                       //     stringBuilder.append(temp);
+                                       //    stringBuilder.append(line);
                                             stringBuilder.append("\n");
-                                        }
-                                        else {
-                                            opazanja = opazanja + line +"\n";
+                                        } else {
+                                            opazanja = opazanja + line + "\n";
 
                                         }
 
@@ -73,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
                                     e.printStackTrace();
                                 }
-                                /********************************************************/
 
 
                             }

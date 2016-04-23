@@ -137,7 +137,7 @@ public class Resenje extends AppCompatActivity {
             listaPravila.get(i).uredi();
         }
 
-        //MD i MB zaljucaka pokazuju na MD i MB preduslova koji su u stvari zakljucci       //// TODO: 4/21/2016 mozda ovo i ne treba 
+        //MD i MB zaljucaka pokazuju na MD i MB preduslova koji su u stvari zakljucci
         listaPravila.urediPreduslove(listaZakljucaka);
 
 

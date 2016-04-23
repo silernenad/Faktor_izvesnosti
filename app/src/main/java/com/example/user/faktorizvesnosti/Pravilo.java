@@ -134,7 +134,7 @@ public class Pravilo {
         }
 
 
-    public void uredi(){    //pravi stabli od Stringa preduslova
+    public void uredi(){    //pravi stablo od Stringa preduslova
         String string=getIzraz();
         StringTokenizer ts = new StringTokenizer(string);
 

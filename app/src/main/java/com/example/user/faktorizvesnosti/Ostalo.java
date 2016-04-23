@@ -251,7 +251,7 @@ public class Ostalo extends AppCompatActivity {
                 Zakljucak tek = listaZakljucaka.getFirst();
                 int i;
                 for (i = 0; i < listaZakljucaka.size(); i++) {      //lista nije prazna
-                    if (tek.jednako(zakljucak)) {
+                    if (tek.jednako(zakljucak)) {               //zakljucak nadjen u listi zaklkjucaka
                         tek.povecajBRojPravila();
                         tek.dodajPravilo(id + " ");
                         break;
